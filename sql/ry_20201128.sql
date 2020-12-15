@@ -68,6 +68,18 @@ create table sys_user (
 insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '管理员');
 insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '测试员');
 
+drop table if exists tb_shop;
+create table tb_shop
+(
+ shop_id       bigint(20)       not null auto_increment     comment  'shop id',
+ shop_name     varchar(30)      not null                    comment  'shop name',
+ description   varchar(2000)    default ''                  comment  'shop description',
+ address       varchar(500)     default ''                  comment  'shop address',
+ user_id       bigint(20)       not null                    comment  'owner user id',
+ create_time   datetime         		                    comment  'shop info create time',
+ update_time   datetime         		                    comment  'shop info last update time',
+ primary key (shop_id)
+) engine=innodb auto_increment=100 comment='shop info table';
 
 -- ----------------------------
 -- 3、岗位信息表
