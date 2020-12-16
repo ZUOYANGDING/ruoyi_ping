@@ -68,6 +68,11 @@ create table sys_user (
 insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '管理员');
 insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '测试员');
 
+
+-- ----------------------------
+-- shop info table
+-- ----------------------------
+
 drop table if exists tb_shop;
 create table tb_shop
 (
@@ -80,6 +85,21 @@ create table tb_shop
  update_time   datetime         		                    comment  'shop info last update time',
  primary key (shop_id)
 ) engine=innodb auto_increment=100 comment='shop info table';
+
+-- ----------------------------
+-- shop photo info table
+-- ----------------------------
+drop table if exists tb_shop_photo;
+create table tb_shop_photo
+(
+    photo_id        bigint(20)         not null auto_increment     comment 'shop photo id',
+    photo           varchar(255)       default ''                  comment 'shop photo url',
+    shop_id         bigint(20)         not null                    comment 'shop id connect to shop',
+    create_time     datetime                                       comment 'photo create time',
+    update_time     datetime                                       comment 'photo last update time',
+    primary key(photo_id)
+) engine=innodb auto_increment=100 comment='photo of shop info table'
+
 
 -- ----------------------------
 -- 3、岗位信息表

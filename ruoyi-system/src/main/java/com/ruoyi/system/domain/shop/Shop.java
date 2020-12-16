@@ -2,6 +2,7 @@ package com.ruoyi.system.domain.shop;
 
 
 import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringExclude;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -39,8 +40,8 @@ public class Shop {
     /** shop photos **/
     private List<ShopPhoto> shopPhotos;
 
-    /** shop owner's user id **/
-    private Long userId;
+    /** shop owner **/
+    private SysUser sysUser;
 
     /** shop info create time **/
     @Excel(name="create Time", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
@@ -98,20 +99,20 @@ public class Shop {
         this.shopPhotos = shopPhotos;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public String getShopName() {
         return shopName;
     }
 
     public void setShopName(String shopName) {
         this.shopName = shopName;
+    }
+
+    public SysUser getSysUser() {
+        return sysUser;
+    }
+
+    public void setSysUser(SysUser sysUser) {
+        this.sysUser = sysUser;
     }
 
     @Override
@@ -124,7 +125,10 @@ public class Shop {
                 .append("shopPhotos", getShopPhotos())
                 .append("shopCreateTime", getCreateTime())
                 .append("shopUpdateTime", getUpdateTime())
-                .append("shopOwnerId", getUserId())
+                .append("shopOwnerId", getSysUser().getUserId())
+                .append("shopOwnerNickName", getSysUser().getNickName())
+                .append("createTime", getCreateTime())
+                .append("updateTime", getUpdateTime())
                 .toString();
     }
 }

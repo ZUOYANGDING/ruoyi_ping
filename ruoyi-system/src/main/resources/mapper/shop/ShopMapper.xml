@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.shop.ShopMapper">
+    <resultMap id="shopResult" type="com.ruoyi.system.domain.shop.Shop">
+        <id property="shopId"           column="shop_id"/>
+        <result property="shopName"         column="shop_name"/>
+        <result property="description"      column="description"/>
+        <result property="address"          column="address"/>
+        <result property="createTime"       column="create_time"/>
+        <result property="updateTime"       column="update_time"/>
+        <association property="sysUser"     column="user_id" javaType="SysUser" resultMap="userResult"/>
+        <collection property="shopPhotos"   javaType="java.util.List" resultMap="photoResult"/>
+    </resultMap>
+
+    <resultMap id="userResult" type="SysUser">
+        <id property="userId"       column="user_id"/>
+        <result property="nickName"     column="nick_name"    />
+        <result property="email"        column="email"        />
+        <result property="phonenumber"  column="phonenumber"  />
+        <result property="sex"          column="sex"          />
+        <result property="avatar"       column="avatar"       />
+        <result property="password"     column="password"     />
+    </resultMap>
+
+    <resultMap id="photoResult" type="com.ruoyi.system.domain.shop.ShopPhoto">
+        <id         property="photoId"          column="photo_id"/>
+        <result     property="photo"            column="photo"/>
+        <result     property="createTime"       column="create_time"/>
+        <result     property="updateTime"       column="update_time"/>
+        <result     property="shopId"           column="shop_id"/>
+    </resultMap>
+
+    <sql id="selectShopVo">
+        select s.shop_id, s.shop_name, s.description, s.address, s.create_time, s.update_time, s.user_id,
+        u.user_id, u.nick_name, u.email, u.phonenumber, u.sex, u.avatar, u.password,
+        p.photo_id, p.photo, p.create_time, p.update_time, p.shop_id
+        from tb_shop s
+            left join sys_user u on s.user_id = u.user_id
+            left join tb_shop_photo p on s.shop_id = p.shop_id
+    </sql>
+
+    <select id="selectShopByShopId" parameterType="Long" resultMap="shopResult">
+        <include refid="selectShopVo"/>
+        where s.shop_id = #{shopId}
+    </select>
+
+    <insert id="insertShop" parameterType="com.ruoyi.system.domain.shop.Shop" useGeneratedKeys="true" keyProperty="shopId">
+        insert into tb_shop(
+            <if test="shopId != null and shopId != 0">shop_id,</if>
+            <if test="shopName != null and shopName != ''">shop_name,</if>
+            <if test="description != null and description != ''">description,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="sysUser.userId !=null and sysUser.userId != 0">user_id,</if>
+            create_time, update_time
+        ) values(
+            <if test="shopId != null and shopId != 0">#{shopId},</if>
+            <if test="shopName != null and shopName != ''">#{shopName},</if>
+            <if test="description != null and description != ''">#{description},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="sysUser.userId !=null and sysUser.userId != 0">#{sysUser.userId},</if>
+            sysdate(), sysdate()
+        )
+    </insert>
+</mapper>
