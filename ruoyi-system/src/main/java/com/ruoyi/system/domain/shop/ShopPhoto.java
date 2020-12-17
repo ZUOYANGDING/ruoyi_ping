@@ -6,6 +6,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Date;
 
+/**
+ * shop photo
+ *
+ * @author zuoyangding
+ */
+
 public class ShopPhoto {
     private static final long serialVersionUID = -2481214303681928043L;
 

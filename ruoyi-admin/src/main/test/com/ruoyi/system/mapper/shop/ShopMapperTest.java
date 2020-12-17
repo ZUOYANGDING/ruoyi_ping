@@ -36,7 +36,7 @@ public class ShopMapperTest {
 
     @Test
     public void selectShopByIdTest() {
-        Long shopId = 100L;
+        Long shopId = 101L;
         Shop shop = shopMapper.selectShopByShopId(shopId);
         assertNotNull(shop);
         System.out.println(shop);

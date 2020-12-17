@@ -98,8 +98,37 @@ create table tb_shop_photo
     create_time     datetime                                       comment 'photo create time',
     update_time     datetime                                       comment 'photo last update time',
     primary key(photo_id)
-) engine=innodb auto_increment=100 comment='photo of shop info table'
+) engine=innodb auto_increment=100 comment='photo of shop info table';
 
+-- ----------------------------
+-- coupon_table
+-- ----------------------------
+drop table if exists tb_coupon;
+create table tb_coupon
+(
+    coupon_id       bigint(20)          not null auto_increment     comment 'coupon id',
+    shop_id         bigint(20)          not null                    comment 'coupon belong to which shop',
+    photo_id        bigint(20)          not null                    comment 'coupon photo id',
+    coupon_price    decimal(8,2)        default -1.00               comment 'discount provided by coupon',
+    coupon_code     varchar(255)        default ''                  comment 'coupon code',
+    coupon_desc     varchar(2000)       default ''                  comment 'coupon description',
+    start_time      datetime                                        comment 'coupon create time',
+    end_time        datetime                                        comment 'coupon update time',
+    primary key(coupon_id)
+) engine=innodb auto_increment=100 comment='coupon info table';
+
+-- ----------------------------
+-- coupon photo table
+-- ---------------------------
+drop table if exists tb_coupon_photo;
+create table tb_coupon_photo
+(
+    photo_id        bigint(20)          not null auto_increment     comment 'coupon photo id',
+    photo           varchar(255)        default ''                  comment 'coupon photo url',
+    coupon_id       bigint(20)          not null                    comment 'coupon id',
+    create_time     datetime                                        comment 'photo create time',
+    primary key(photo_id)
+) engine=innodb auto_increment=100 comment='coupon photo table';
 
 -- ----------------------------
 -- 3、岗位信息表
