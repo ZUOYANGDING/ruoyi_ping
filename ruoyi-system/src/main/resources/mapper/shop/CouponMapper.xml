@@ -10,8 +10,8 @@
         <result         property="couponCode"       column="coupon_code"/>
         <result         property="startTime"        column="start_time"/>
         <result         property="endTime"          column="end_time"/>
-        <association    property="Shop"             column="shop_id" javaType="com.ruoyi.system.domain.shop.Shop" resultMap="shopResult"/>
-        <collection     property="couponPhoto"      javaType="java.util.List" resultMap="photoResult"/>
+        <association    property="shop"             column="shop_id" javaType="com.ruoyi.system.domain.shop.Shop" resultMap="shopResult"/>
+        <collection     property="photoList"      javaType="java.util.List" resultMap="photoResult"/>
     </resultMap>
 
     <resultMap id="shopResult" type="com.ruoyi.system.domain.shop.Shop">
@@ -30,11 +30,11 @@
 
     <sql id="selectCouponVo">
         select co.coupon_id, co.coupon_price, co.coupon_desc, co.coupon_code, co.start_time, co.end_time, co.shop_id,
-        s.shop_id, s.shop_name, s.description, s.address
+        s.shop_id, s.shop_name, s.description, s.address,
         p.photo_id, p.photo, p.coupon_id, p.create_time
         from tb_coupon co
             left join tb_shop s on s.shop_id = co.shop_id
-            left join tb_coupon_photo on co.coupon_id = p.coupon_id
+            left join tb_coupon_photo p on co.coupon_id = p.coupon_id
     </sql>
 
     <select id="selectCouponByCouponId" parameterType="Long" resultMap="couponResult">
@@ -46,10 +46,10 @@
         insert into tb_coupon(
             <if test="couponId != null and couponId != 0">coupon_id,</if>
             <if test="couponPrice != null">coupon_price,</if>
-            <if test="couponCode != null and couponCode != ''">coupon_code</if>
-            <if test="couponDesc != null and couponDesc != ''">coupon_desc</if>
-            <if test="shop.shopId != null and shop.shopId != 0">shop_id</if>
-            <if test="startTime != null">start_time</if>
+            <if test="couponCode != null and couponCode != ''">coupon_code,</if>
+            <if test="couponDesc != null and couponDesc != ''">coupon_desc,</if>
+            <if test="shop.shopId != null and shop.shopId != 0">shop_id,</if>
+            <if test="startTime != null">start_time,</if>
             <if test="endTime != null">end_time</if>
         ) values (
             <if test="couponId != null and couponId != 0">#{couponId},</if>
@@ -57,8 +57,8 @@
             <if test="couponCode != null and couponCode != ''">#{couponCode},</if>
             <if test="couponDesc != null and couponDesc != ''">#{couponDesc},</if>
             <if test="shop.shopId != null and shop.shopId != 0">#{shop.shopId},</if>
-            <if test="startTime != null">startTime</if>
-            <if test="endTime != null">endTime</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime}</if>
         )
     </insert>
 </mapper>

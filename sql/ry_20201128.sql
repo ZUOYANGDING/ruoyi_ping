@@ -108,7 +108,6 @@ create table tb_coupon
 (
     coupon_id       bigint(20)          not null auto_increment     comment 'coupon id',
     shop_id         bigint(20)          not null                    comment 'coupon belong to which shop',
-    photo_id        bigint(20)          not null                    comment 'coupon photo id',
     coupon_price    decimal(8,2)        default -1.00               comment 'discount provided by coupon',
     coupon_code     varchar(255)        default ''                  comment 'coupon code',
     coupon_desc     varchar(2000)       default ''                  comment 'coupon description',

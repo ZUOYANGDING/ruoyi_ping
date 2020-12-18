@@ -65,6 +65,7 @@ public class CouponPhoto {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("Coupon Photo Id", getPhotoId())
                 .append("Coupon Id", getCouponId())
+                .append("Coupon Photo storage url", getPhoto())
                 .append("Create Time", getCreateTime())
                 .toString();
     }

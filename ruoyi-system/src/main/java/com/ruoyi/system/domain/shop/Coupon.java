@@ -4,6 +4,7 @@ import com.ruoyi.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Coupon {
 
     /** coupon price **/
     @Excel(name = "coupon price", cellType = Excel.ColumnType.NUMERIC)
-    private double couponPrice;
+    private BigDecimal couponPrice;
 
     /** coupon description**/
     @Excel(name = "coupon description", cellType = Excel.ColumnType.STRING)
@@ -52,11 +53,11 @@ public class Coupon {
         this.couponId = couponId;
     }
 
-    public double getCouponPrice() {
+    public BigDecimal getCouponPrice() {
         return couponPrice;
     }
 
-    public void setCouponPrice(double couponPrice) {
+    public void setCouponPrice(BigDecimal couponPrice) {
         this.couponPrice = couponPrice;
     }
 

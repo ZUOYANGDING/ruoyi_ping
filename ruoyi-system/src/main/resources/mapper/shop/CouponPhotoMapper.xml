@@ -12,7 +12,7 @@
 
     <sql id="selectCouponPhotoVo">
         select photo_id, photo, create_time, coupon_id
-        from tb_coupon
+        from tb_coupon_photo
     </sql>
 
     <select id="getCouponPhotoById" parameterType="Long" resultMap="couponPhotoResult">
@@ -21,7 +21,7 @@
     </select>
 
     <select id="getCouponPhotoByCouponId" parameterType="Long" resultMap="couponPhotoResult">
-        select p.photo_id, p.photo, p.create_time, p.coupon_id,
+        select p.photo_id, p.photo, p.create_time, p.coupon_id
         from tb_coupon_photo as p
         where p.coupon_id = #{couponId}
     </select>
@@ -43,10 +43,9 @@
     <insert id="batchInsertCouponPhoto">
         insert into tb_coupon_photo(
             photo_id, photo, coupon_id, create_time
-        ) values (
+        ) values
             <foreach collection="list" item="couponPhoto" index="index" separator=",">
                 (#{couponPhoto.photoId}, #{couponPhoto.photo}, #{couponPhoto.couponId}, sysdate())
             </foreach>
-        )
     </insert>
 </mapper>

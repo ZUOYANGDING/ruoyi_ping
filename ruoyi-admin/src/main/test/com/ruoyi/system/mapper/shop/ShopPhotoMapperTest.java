@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RuoYiApplication.class)
-public class shopPhotoMapperTest {
+public class ShopPhotoMapperTest {
 
     @Autowired
     ShopPhotoMapper shopPhotoMapper;
