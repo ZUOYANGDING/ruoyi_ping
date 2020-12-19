@@ -44,8 +44,8 @@ public class ShopPhotoMapperTest {
 
     @Test
     public void batchInsertShopPhotoTest() {
-        Long shopId = 101L;
-        int count = 4;
+        Long shopId = 102L;
+        int count = 6;
         List<ShopPhoto> photoList = new ArrayList<>();
         for (int i=0; i<3; i++) {
             ShopPhoto shopPhoto = new ShopPhoto();
@@ -56,6 +56,20 @@ public class ShopPhotoMapperTest {
         }
         int result = shopPhotoMapper.batchInsertShopPhoto(photoList);
         assertEquals(result, 3);
+    }
+
+    @Test
+    public void deleteShopPhotoByIdTest() {
+        Long photoId = 108L;
+        int result = shopPhotoMapper.deleteShopPhotoById(photoId);
+        assertEquals(result, 1);
+    }
+
+    @Test
+    public void deleteShopPhotoByIdsTest() {
+        Long[] photoIds = {106L, 107L};
+        int result = shopPhotoMapper.deleteShopPhotoByIds(photoIds);
+        assertEquals(result, 2);
     }
 
 }

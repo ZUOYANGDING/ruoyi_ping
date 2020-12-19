@@ -12,4 +12,8 @@ public interface ShopPhotoMapper {
     public int insertShopPhoto(ShopPhoto shopPhoto);
 
     public int batchInsertShopPhoto(List<ShopPhoto> shopPhotos);
+
+    public int deleteShopPhotoById(Long shopId);
+
+    public int deleteShopPhotoByIds(Long[] shopIds);
 }

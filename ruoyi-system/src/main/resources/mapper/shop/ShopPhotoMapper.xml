@@ -50,4 +50,17 @@
                 sysdate(), sysdate())
             </foreach>
     </insert>
+
+    <delete id="deleteShopPhotoById" parameterType="Long">
+        delete from tb_shop_photo
+        where photo_id = #{photoId}
+    </delete>
+
+    <delete id="deleteShopPhotoByIds" parameterType="Long">
+        delete from tb_shop_photo
+        where photo_id in
+        <foreach collection="array" item="photoId" open="(" separator="," close=")">
+            #{photoId}
+        </foreach>
+    </delete>
 </mapper>
