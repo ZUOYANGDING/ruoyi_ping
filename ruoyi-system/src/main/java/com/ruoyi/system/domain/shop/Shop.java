@@ -37,6 +37,10 @@ public class Shop {
     @Excel(name = "shop address", cellType = Excel.ColumnType.STRING)
     private String address;
 
+    /** shop status, -1 means ban, 0 means under check, 1 means pass check **/
+    @Excel(name = "shop status", readConverterExp = "-1=ban, 0=check, 1=pass check")
+    private String status;
+
     /** shop photos **/
     private List<ShopPhoto> shopPhotos;
 
@@ -115,10 +119,19 @@ public class Shop {
         this.sysUser = sysUser;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("shopId", getShopId())
+                .append("shopStatus", getStatus())
                 .append("shopName", getShopName())
                 .append("shopDescription", getDescription())
                 .append("shopAddress", getAddress())

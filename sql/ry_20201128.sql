@@ -77,6 +77,7 @@ drop table if exists tb_shop;
 create table tb_shop
 (
  shop_id       bigint(20)       not null auto_increment     comment  'shop id',
+ status        char(1)          default '0'                 comment  'shop status',
  shop_name     varchar(30)      not null                    comment  'shop name',
  description   varchar(2000)    default ''                  comment  'shop description',
  address       varchar(500)     default ''                  comment  'shop address',
