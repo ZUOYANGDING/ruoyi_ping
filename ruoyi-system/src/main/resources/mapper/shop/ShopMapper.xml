@@ -74,21 +74,23 @@
 
     <select id="selectShopList" parameterType="com.ruoyi.system.domain.shop.Shop" resultMap="shopResult">
         <include refid="selectShopVo"/>
-        <if test="status != null and status != ''">
-            AND s.status = #{status}
-        </if>
-        <if test="shopName != null and shopName != ''">
-            AND s.shop_name like concat('%', #{shopName}, '%')
-        </if>
-        <if test="address != null and address != ''">
-            AND s.address like concat('%', #{address}, '%')
-        </if>
-        <if test="sysUser != null and sysUser.userId != null and sysUser.userId != 0">
-            AND s.user_id = #{sysUser.userId}
-        </if>
-        <if test="createTime != null and createTime != ''">
-            AND date_format(s.create_time, '%y%m%d') >= date_format(#{createTime}, '%y%m%d')
-        </if>
+        <where>
+            <if test="status != null and status != ''">
+                AND s.status = #{status}
+            </if>
+            <if test="shopName != null and shopName != ''">
+                AND s.shop_name like concat('%', #{shopName}, '%')
+            </if>
+            <if test="address != null and address != ''">
+                AND s.address like concat('%', #{address}, '%')
+            </if>
+            <if test="sysUser != null and sysUser.userId != null and sysUser.userId != 0">
+                AND s.user_id = #{sysUser.userId}
+            </if>
+            <if test="createTime != null">
+                AND date_format(s.create_time, '%y%m%d') &gt;= date_format(#{createTime}, '%y%m%d')
+            </if>
+        </where>
     </select>
 
     <select id="checkShopNameUnique" parameterType="String" resultType="int">

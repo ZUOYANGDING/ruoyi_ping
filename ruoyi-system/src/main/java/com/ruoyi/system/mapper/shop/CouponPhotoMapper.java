@@ -12,4 +12,10 @@ public interface CouponPhotoMapper {
     public int insertCouponPhoto(CouponPhoto couponPhoto);
 
     public int batchInsertCouponPhoto(List<CouponPhoto> couponPhotos);
+
+    public int deleteCouponPhotoById(Long photoId);
+
+    public int deleteCouponPhotoByIds(Long[] photoIds);
+
+    public int deleteCouponPhotoByCouponId(Long couponId);
 }

@@ -42,11 +42,11 @@ public class CouponPhotoMapperTest {
     @Test
     public void batchInsertCouponPhotoTest() {
         List<CouponPhoto> photos = new ArrayList<>();
-        int count = 2;
+        int count = 8;
         for (int i=0; i<3; i++) {
             CouponPhoto couponPhoto = new CouponPhoto();
-            couponPhoto.setCouponId(100L);
-            couponPhoto.setPhoto("test url " + count);
+            couponPhoto.setCouponId(101L);
+            couponPhoto.setPhoto("test/couponphoto/url/" + count);
             count++;
             photos.add(couponPhoto);
         }
@@ -62,5 +62,27 @@ public class CouponPhotoMapperTest {
         couponPhotos.stream().forEach(couponPhoto -> {
             System.out.println(couponPhoto);
         });
+    }
+
+    @Test
+    public void deleteCouponPhotoByIdTest() {
+        Long photoId = 109L;
+        int result = couponPhotoMapper.deleteCouponPhotoById(photoId);
+        assertEquals(result, 1);
+    }
+
+    @Test
+    public void deleteCouponPhotoByIdsTest() {
+        Long[] photoIds = {107L, 108L};
+        int result = couponPhotoMapper.deleteCouponPhotoByIds(photoIds);
+        assertEquals(result, 2);
+
+    }
+
+    @Test
+    public void deleteCouponPhotoByCouponIdTest() {
+        Long couponId = 101L;
+        int result = couponPhotoMapper.deleteCouponPhotoByCouponId(couponId);
+        assertEquals(3, result);
     }
 }

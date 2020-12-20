@@ -48,4 +48,22 @@
                 (#{couponPhoto.photoId}, #{couponPhoto.photo}, #{couponPhoto.couponId}, sysdate())
             </foreach>
     </insert>
+
+    <delete id="deleteCouponPhotoById" parameterType="Long">
+        delete from tb_coupon_photo
+        where photo_id=#{photoId}
+    </delete>
+
+    <delete id="deleteCouponPhotoByIds" parameterType="Long">
+        delete from tb_coupon_photo
+        where photo_id in
+        <foreach collection="array" item="photoId" open="(" separator="," close=")">
+            #{photoId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCouponPhotoByCouponId" parameterType="Long">
+        delete from tb_coupon_photo
+        where coupon_id = #{couponId}
+    </delete>
 </mapper>
