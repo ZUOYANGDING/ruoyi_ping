@@ -16,4 +16,8 @@ public interface ShopPhotoMapper {
     public int deleteShopPhotoById(Long photoId);
 
     public int deleteShopPhotoByIds(Long[] photoIds);
+
+    public int deleteShopPhotoByShopId(Long shopId);
+
+    public int deleteShopPhotoByShopIds(Long[] shopIds);
 }

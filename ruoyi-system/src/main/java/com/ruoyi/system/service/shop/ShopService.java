@@ -1,23 +1,65 @@
 package com.ruoyi.system.service.shop;
 
 import com.ruoyi.system.domain.shop.Shop;
+import com.ruoyi.system.dto.ShopOperationExecution;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * shop service interface
+ *
+ * @author zuoyangding
+ */
+
 public interface ShopService {
-    public List<Shop> selectShopList(Shop shop);
+    /**
+     * fetch shop list based on filter
+     * @param shop
+     * @return
+     */
+    public ShopOperationExecution selectShopList(Shop shop);
 
-    public Shop selectShopByName(String shopName);
+    /**
+     * fetch shop by shop id, only return status==1
+     * @param shopId
+     * @param status
+     * @return
+     */
+    public ShopOperationExecution selectShopById(Long shopId, String status);
 
-    public Shop selectShopById(Long shopId);
+    /**
+     * create new shop, with default status==0
+     * @param shop
+     * @return
+     */
+    public ShopOperationExecution addShop(Shop shop);
 
-    public int insertShop(Shop shop);
+    /**
+     * update shop status by shopId
+     * @param shop
+     * @return
+     */
+    public ShopOperationExecution updateShopStates(Shop shop);
 
-    public int updateShopStates(Shop shop);
+    /**
+     * update shop status, name, desc or address
+     * @param shop
+     * @return
+     */
+    public ShopOperationExecution updateShopProfile(Shop shop);
 
-    public int updateShopProfile(Shop shop);
+    /**
+     * batch delete shops from db
+     * @param shopIds
+     * @return
+     */
+    public ShopOperationExecution deleteShopByIds(Long[] shopIds);
 
-    public int deleteShopByIds(Long[] shopIds);
-
-    public int deleteShopById(Long shopId);
+    /**
+     * delete shop from db
+     * @param shopId
+     * @return
+     */
+    public ShopOperationExecution deleteShopById(Long shopId);
 }

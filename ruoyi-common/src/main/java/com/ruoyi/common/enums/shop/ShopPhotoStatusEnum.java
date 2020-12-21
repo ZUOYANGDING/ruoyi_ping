@@ -1,27 +1,27 @@
 package com.ruoyi.common.enums.shop;
 
 /**
- * shop status enum
+ * shop photo enum
  *
  * @author zuoyangding
  */
-public enum ShopStatesEnum {
-    SUCCESS(1, "Shop Operation Success"),
-    SHOP_UNDER_CHECK(2, "Shop is under checking"),
-    NO_SHOP(3, "Cannot find matched shop"),
+public enum ShopPhotoStatusEnum {
+    SUCCESS(1, "Shop Photo Operation Success"),
+    NO_PHOTO(3, "Cannot find matched photo"),
     MISSING_ARGS(4, "Missing necessary params"),
-    INNER_ERROR(-1, "Shop Operation Failed");
+    INNER_ERROR(-1, "Shop Photo Operation Failed");
+
 
     private int state;
     private String info;
 
-    ShopStatesEnum(int state, String info) {
+    ShopPhotoStatusEnum(int state, String info) {
         this.state = state;
         this.info = info;
     }
 
-    public static ShopStatesEnum stateOf(int state) {
-        for (ShopStatesEnum statesEnum : values()) {
+    public static ShopPhotoStatusEnum stateOf(int state) {
+        for (ShopPhotoStatusEnum statesEnum : values()) {
             if (statesEnum.getState() == state) {
                 return statesEnum;
             }

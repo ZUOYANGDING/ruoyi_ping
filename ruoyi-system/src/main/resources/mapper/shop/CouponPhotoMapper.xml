@@ -66,4 +66,12 @@
         delete from tb_coupon_photo
         where coupon_id = #{couponId}
     </delete>
+
+    <delete id="deleteCouponPhotoByCouponIds" parameterType="Long">
+        delete from tb_coupon_photo
+        where coupon_id in
+        <foreach collection="array" item="couponId" open="(" separator="," close=")">
+            #{couponId}
+        </foreach>
+    </delete>
 </mapper>

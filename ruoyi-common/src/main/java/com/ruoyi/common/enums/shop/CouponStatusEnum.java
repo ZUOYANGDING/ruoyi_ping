@@ -1,29 +1,28 @@
 package com.ruoyi.common.enums.shop;
 
 /**
- * shop status enum
+ * coupon status enum
  *
  * @author zuoyangding
  */
-public enum ShopStatesEnum {
-    SUCCESS(1, "Shop Operation Success"),
-    SHOP_UNDER_CHECK(2, "Shop is under checking"),
-    NO_SHOP(3, "Cannot find matched shop"),
+public enum CouponStatusEnum {
+    SUCCESS(1, "Coupon operation success"),
+    INNER_ERROR(-1, "Coupon operation failed"),
     MISSING_ARGS(4, "Missing necessary params"),
-    INNER_ERROR(-1, "Shop Operation Failed");
+    NO_COUPON(3, "Cannot find matched coupon");
 
     private int state;
     private String info;
 
-    ShopStatesEnum(int state, String info) {
+    CouponStatusEnum(int state, String info) {
         this.state = state;
         this.info = info;
     }
 
-    public static ShopStatesEnum stateOf(int state) {
-        for (ShopStatesEnum statesEnum : values()) {
-            if (statesEnum.getState() == state) {
-                return statesEnum;
+    public static CouponStatusEnum stateOf(int state) {
+        for (CouponStatusEnum statusEnum :  values()) {
+            if (statusEnum.getState() == state) {
+                return statusEnum;
             }
         }
         return null;

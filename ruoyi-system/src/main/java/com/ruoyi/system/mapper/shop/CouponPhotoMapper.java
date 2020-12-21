@@ -18,4 +18,6 @@ public interface CouponPhotoMapper {
     public int deleteCouponPhotoByIds(Long[] photoIds);
 
     public int deleteCouponPhotoByCouponId(Long couponId);
+
+    public int deleteCouponPhotoByCouponIds(Long[] couponIds);
 }

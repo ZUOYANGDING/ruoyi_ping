@@ -13,7 +13,7 @@
 
     <sql id="selectShopPhotoVo">
         select photo_id, photo, create_time, update_time, shop_id
-        from tb_photo
+        from tb_shop_photo
     </sql>
 
     <select id="getShopPhotoById" parameterType="Long" resultMap="shopPhotoResult">
@@ -61,6 +61,19 @@
         where photo_id in
         <foreach collection="array" item="photoId" open="(" separator="," close=")">
             #{photoId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteShopPhotoByShopId" parameterType="Long">
+        delete from tb_shop_photo
+        where shop_id = #{shopId}
+    </delete>
+
+    <delete id="deleteShopPhotoByShopIds" parameterType="Long">
+        delete from tb_shop_photo
+        where shop_id in
+        <foreach collection="array" item="shopId" open="(" separator="," close=")">
+            #{shopId}
         </foreach>
     </delete>
 </mapper>
