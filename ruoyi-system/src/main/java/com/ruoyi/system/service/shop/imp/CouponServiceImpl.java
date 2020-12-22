@@ -15,7 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * coupon service implementation
+ *
+ * @author zuoyangding
+ */
 @Service
 public class CouponServiceImpl implements CouponService {
 
@@ -73,9 +79,9 @@ public class CouponServiceImpl implements CouponService {
         try {
             int effRow = couponMapper.insertCoupon(coupon);
             if (effRow < 1) {
-                return new CouponOperationExecution(CouponStatusEnum.SUCCESS);
-            } else {
                 return new CouponOperationExecution(CouponStatusEnum.INNER_ERROR);
+            } else {
+                return new CouponOperationExecution(CouponStatusEnum.SUCCESS);
             }
         } catch (RuntimeException e) {
             throw new CustomException(e.getMessage());
@@ -83,31 +89,25 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public CouponOperationExecution getCouponListByPrice(List<BigDecimal> priceInterval) {
+    public CouponOperationExecution getCouponListByPrice(Map<String, BigDecimal> priceInterval) {
         if (priceInterval==null) {
             return new CouponOperationExecution(CouponStatusEnum.INNER_ERROR);
         }
 
         //set up high bound and low bound
-        int len = priceInterval.size();
-        BigDecimal high = null;
-        BigDecimal low = null;
-        switch (len) {
-            case 0:
-                high = new BigDecimal("100");
-                low = new BigDecimal("0");
-                break;
-            case 1:
-                high = priceInterval.get(0);
-                low = new BigDecimal("0");
-                break;
-            default:
-                high = priceInterval.get(0);
-                low = priceInterval.get(1);
+        BigDecimal high = priceInterval.get("high");
+        BigDecimal low = priceInterval.get("low");
+        if (high==null && low==null) {
+            high = new BigDecimal("100");
+            low = new BigDecimal("0");
+        } else if (high!=null && low==null){
+            low = new BigDecimal("0");
+        } else if (high==null && low!=null){
+            high = new BigDecimal("100");
         }
 
-        log.debug("low bound----->", low);
-        log.debug("high bound----->", high);
+        log.debug("low bound {}", low);
+        log.debug("high bound {}", high);
         try {
             List<Coupon> couponList = couponMapper.selectCouponByPriceInterval(high, low);
             if (couponList!=null && couponList.size()>0) {

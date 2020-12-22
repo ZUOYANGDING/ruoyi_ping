@@ -42,7 +42,7 @@ public class CouponPhotoMapperTest {
     @Test
     public void batchInsertCouponPhotoTest() {
         List<CouponPhoto> photos = new ArrayList<>();
-        int count = 8;
+        int count = 10;
         for (int i=0; i<3; i++) {
             CouponPhoto couponPhoto = new CouponPhoto();
             couponPhoto.setCouponId(101L);
