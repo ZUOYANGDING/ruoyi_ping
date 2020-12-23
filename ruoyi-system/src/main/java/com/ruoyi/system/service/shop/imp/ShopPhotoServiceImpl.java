@@ -139,4 +139,42 @@ public class ShopPhotoServiceImpl implements ShopPhotoService {
             throw new CustomException(e.getMessage());
         }
     }
+
+    @Override
+    @Transactional
+    public ShopPhotoOperationExecution deleteShopPhotoByShopId(Long shopId) {
+        if (shopId==null || shopId<1) {
+            return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.INNER_ERROR);
+        }
+
+        try {
+            int effRow = shopPhotoMapper.deleteShopPhotoByShopId(shopId);
+            if (effRow < 0) {
+                return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.INNER_ERROR);
+            } else {
+                return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.SUCCESS);
+            }
+        } catch (RuntimeException e) {
+            throw new CustomException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public ShopPhotoOperationExecution deleteShopPhotoByShopIds(Long[] shopIds) {
+        if (shopIds==null || shopIds.length<1) {
+            return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.INNER_ERROR);
+        }
+
+        try {
+            int effRow = shopPhotoMapper.deleteShopPhotoByShopIds(shopIds);
+            if (effRow < 0) {
+                return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.INNER_ERROR);
+            } else {
+                return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.SUCCESS);
+            }
+        } catch (RuntimeException e) {
+            throw new CustomException(e.getMessage());
+        }
+    }
 }

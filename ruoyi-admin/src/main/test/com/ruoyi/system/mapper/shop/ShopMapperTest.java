@@ -58,7 +58,7 @@ public class ShopMapperTest {
     public void selectShopListTest() {
         SysUser sysUser = sysUserMapper.selectUserById(1L);
         Shop shop = new Shop();
-        shop.setSysUser(sysUser);
+//        shop.setSysUser(sysUser);
         List<Shop> shops = shopMapper.selectShopList(shop);
         shops.stream().forEach(shop1 -> {
             System.out.println(shop1);

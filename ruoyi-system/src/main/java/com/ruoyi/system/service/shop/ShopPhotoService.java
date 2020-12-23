@@ -52,4 +52,18 @@ public interface ShopPhotoService {
      * @return
      */
     public ShopPhotoOperationExecution deleteShopPhotoByIds(Long[] photoIds);
+
+    /**
+     * delete shop photos by shop id
+     * @param shopId
+     * @return
+     */
+    public ShopPhotoOperationExecution deleteShopPhotoByShopId(Long shopId);
+
+    /**
+     * delete shop photos by shop ids
+     * @param shopIds
+     * @return
+     */
+    public ShopPhotoOperationExecution deleteShopPhotoByShopIds(Long[] shopIds);
 }
