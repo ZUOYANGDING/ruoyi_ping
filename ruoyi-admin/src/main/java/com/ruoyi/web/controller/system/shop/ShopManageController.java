@@ -32,8 +32,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/shop/manage/")
-public class ShopController extends BaseController {
-    private final Logger log = LoggerFactory.getLogger(ShopController.class);
+public class ShopManageController extends BaseController {
+    private final Logger log = LoggerFactory.getLogger(ShopManageController.class);
     @Autowired
     private ISysUserService userService;
 
@@ -147,7 +147,12 @@ public class ShopController extends BaseController {
         }
     }
 
-    @PostMapping("/update/general")
+    /**
+     * update shop text info
+     * @param shop
+     * @return
+     */
+    @PutMapping("/update/general")
     public AjaxResult updateShop(@RequestBody Shop shop) {
         if (shop==null || shop.getShopId()==null || shop.getShopId()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
@@ -166,7 +171,12 @@ public class ShopController extends BaseController {
         }
     }
 
-    @PostMapping("/shopphoto/updatephoto")
+    /**
+     * update shop photo
+     * @param photoAddBody
+     * @return
+     */
+    @PutMapping("/shopphoto/updatephoto")
     public AjaxResult updateShopPhoto(@RequestBody PhotoAddBody photoAddBody) {
         if (photoAddBody==null || photoAddBody.getShopId()==null || photoAddBody.getShopId()<1
                 || photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
@@ -179,8 +189,10 @@ public class ShopController extends BaseController {
             if (spoe.getState() == ShopPhotoStatusEnum.INNER_ERROR.getState()) {
                 return AjaxResult.error(ShopPhotoStatusEnum.INNER_ERROR.getInfo());
             }
-            List<String> photoAddress = transferEntityToAddress(spoe.getShopPhotos());
-            ShopImgFileUtil.deleteImgFile(photoAddress);
+            if (spoe.getState() == ShopPhotoStatusEnum.SUCCESS.getState()) {
+                List<String> photoAddress = transferEntityToAddress(spoe.getShopPhotos());
+                ShopImgFileUtil.deleteImgFile(photoAddress);
+            }
 
             // delete shop photo from db
             ShopPhotoOperationExecution spoe_delete =
@@ -208,7 +220,51 @@ public class ShopController extends BaseController {
         }
     }
 
+    @DeleteMapping("/delete/{shopId}")
+    public AjaxResult deleteShop(@PathVariable Long shopId) {
+        if (shopId==null || shopId<1) {
+            return AjaxResult.error(501, "Missing Required arguments");
+        }
+        try {
+            // delete shop img from server file storage
+            ShopPhotoOperationExecution spoe = shopPhotoService.selectShopPhotoListByShopId(shopId);
+            if (spoe.getState() == ShopPhotoStatusEnum.INNER_ERROR.getState()) {
+                return AjaxResult.error(ShopPhotoStatusEnum.INNER_ERROR.getInfo());
+            }
+            if (spoe.getState() == ShopPhotoStatusEnum.SUCCESS.getState()) {
+                List<ShopPhoto> shopPhotos = spoe.getShopPhotos();
+                List<String> photoAddress = transferEntityToAddress(shopPhotos);
+                ShopImgFileUtil.deleteImgFile(photoAddress);
+            }
 
+            // delete shop img from db
+            ShopPhotoOperationExecution spoe_db = shopPhotoService.deleteShopPhotoByShopId(shopId);
+            if (spoe_db.getState() == ShopStatesEnum.SUCCESS.getState()
+                    || spoe_db.getState() == ShopPhotoStatusEnum.NO_PHOTO.getState()) {
+
+                // delete shop from db
+                ShopOperationExecution soe = shopService.deleteShopById(shopId);
+                if (soe.getState() == ShopStatesEnum.SUCCESS.getState()) {
+                    return AjaxResult.success();
+                } else {
+                    return AjaxResult.error(ShopStatesEnum.INNER_ERROR.getInfo());
+                }
+            } else {
+                return AjaxResult.error(ShopPhotoStatusEnum.INNER_ERROR.getInfo());
+            }
+        } catch (CustomException e) {
+            log.debug("error in shop delete: {}", e.getMessage());
+            return AjaxResult.error(e.getMessage());
+        }
+
+    }
+
+    /**
+     * transfer photo address in request body into shop photo entity
+     * @param photoAddress
+     * @param shopId
+     * @return
+     */
     private List<ShopPhoto> transferAddressToEntity(List<String> photoAddress, Long shopId) {
         List<ShopPhoto> shopPhotos = new ArrayList<>();
         for (String photo : photoAddress) {
@@ -222,6 +278,11 @@ public class ShopController extends BaseController {
         return shopPhotos;
     }
 
+    /**
+     * transfer shop photo entity into photo address
+     * @param photos
+     * @return
+     */
     private List<String> transferEntityToAddress(List<ShopPhoto> photos) {
         List<String> shopAddress = new ArrayList<>();
         for (ShopPhoto photo: photos) {

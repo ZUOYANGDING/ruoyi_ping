@@ -1,0 +1,12 @@
+Create shop:
+	call /shop/manage/register 							add new shop (only text info)					----> 
+	call /shop/manage/shopphoto/savephoto				add single shop photo to server file storage	---->
+	call /shop/manage/shopphoto/addphoto				add shop photo into db							---->
+
+Update shop:
+	call /shop/manage/update/general 					update shop info (only text info)				---->
+	call /shop/manage/shopphoto/savephoto				add single shop photo to server file storage	---->
+	call /shop/manage/shopphoto/updatephoto				add shop photo into db, delete old in db, delete old from server file storage
+
+Delete shop:
+	call /shop/manage/delele							
