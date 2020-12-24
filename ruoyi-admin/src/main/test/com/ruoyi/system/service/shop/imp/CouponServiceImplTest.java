@@ -39,10 +39,11 @@ public class CouponServiceImplTest {
 
     @Test
     public void getCouponListTest() {
-        Shop shop = new Shop();
-        shop.setShopId(100L);
+//        Shop shop = new Shop();
+//        shop.setShopId(100L);
         Coupon coupon = new Coupon();
-        coupon.setShop(shop);
+        coupon.setCouponCode("test coupon code");
+//        coupon.setShop(shop);
         CouponOperationExecution coe = couponService.getCouponList(coupon);
         assertNotNull(coe);
         coe.getCouponList().stream().forEach(coupon1 -> {
@@ -93,8 +94,7 @@ public class CouponServiceImplTest {
         System.out.println("=============================================");
         //test with high bound
         BigDecimal highPrice = new BigDecimal("50");
-        BigDecimal div = new BigDecimal("100");
-        priceInterval.put("high", highPrice.divide(div, 2, RoundingMode.UNNECESSARY));
+        priceInterval.put("high", highPrice);
         coe = couponService.getCouponListByPrice(priceInterval);
         assertNotNull(coe);
         coe.getCouponList().stream().forEach(coupon -> {
@@ -104,7 +104,7 @@ public class CouponServiceImplTest {
         //test with low bound
         BigDecimal lowBound = new BigDecimal("50");
         priceInterval.put("high", null);
-        priceInterval.put("low", lowBound.divide(div, 2, RoundingMode.UNNECESSARY));
+        priceInterval.put("low", lowBound);
         coe = couponService.getCouponListByPrice(priceInterval);
         assertNotNull(coe);
         coe.getCouponList().stream().forEach(coupon -> {
@@ -113,7 +113,7 @@ public class CouponServiceImplTest {
         System.out.println("=============================================");
         //test with both
         highPrice = new BigDecimal("75");
-        priceInterval.put("high", highPrice.divide(div, 2, RoundingMode.UNNECESSARY));
+        priceInterval.put("high", highPrice);
         coe = couponService.getCouponListByPrice(priceInterval);
         assertNotNull(coe);
         coe.getCouponList().stream().forEach(coupon -> {

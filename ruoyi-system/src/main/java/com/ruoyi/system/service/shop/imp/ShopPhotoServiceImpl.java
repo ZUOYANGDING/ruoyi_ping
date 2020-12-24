@@ -151,6 +151,8 @@ public class ShopPhotoServiceImpl implements ShopPhotoService {
             int effRow = shopPhotoMapper.deleteShopPhotoByShopId(shopId);
             if (effRow < 0) {
                 return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.INNER_ERROR);
+            } else if (effRow == 1){
+                return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.NO_PHOTO);
             } else {
                 return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.SUCCESS);
             }
@@ -170,6 +172,8 @@ public class ShopPhotoServiceImpl implements ShopPhotoService {
             int effRow = shopPhotoMapper.deleteShopPhotoByShopIds(shopIds);
             if (effRow < 0) {
                 return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.INNER_ERROR);
+            } else if (effRow == 1){
+                return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.NO_PHOTO);
             } else {
                 return new ShopPhotoOperationExecution(ShopPhotoStatusEnum.SUCCESS);
             }

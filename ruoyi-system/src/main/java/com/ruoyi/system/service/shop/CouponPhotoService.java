@@ -52,4 +52,18 @@ public interface CouponPhotoService {
      * @return
      */
     public CouponPhotoOperationExecution deleteCouponPhotoByIds(Long[] photoIds);
+
+    /**
+     * delete coupon photos by coupon id
+     * @param couponId
+     * @return
+     */
+    public CouponPhotoOperationExecution deleteCouponPhotoByCouponId(Long couponId);
+
+    /**
+     * delete coupon photos by coupon ids
+     * @param couponIds
+     * @return
+     */
+    public CouponPhotoOperationExecution deleteCouponPhotoByCouponIds(Long[] couponIds);
 }

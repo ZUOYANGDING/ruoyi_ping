@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * shop controller with user auth
+ * shop controller with shop owner
  *
  * @author zuoyangding
  */
@@ -65,7 +65,7 @@ public class ShopManageController extends BaseController {
                 return AjaxResult.error(soe.getStateInfo());
             }
         } catch (CustomException e) {
-            log.debug("error whe fetch shop: {}", e.getMessage());
+            log.debug("error when fetch shop: {}", e.getMessage());
             return AjaxResult.error(e.getMessage());
         }
     }
@@ -106,12 +106,13 @@ public class ShopManageController extends BaseController {
      */
     @PostMapping("/shopphoto/addphoto")
     public AjaxResult addShopPhoto(@RequestBody PhotoAddBody photoAddBody) {
-        if (photoAddBody==null || photoAddBody.getShopId()==null || photoAddBody.getShopId()<1 ||
+        //TODO auth for currentUser
+        if (photoAddBody==null || photoAddBody.getId()==null || photoAddBody.getId()<1 ||
                 photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
         }
         // create shop photo list
-        List<ShopPhoto> shopPhotos = transferAddressToEntity(photoAddBody.getPhotoAddress(), photoAddBody.getShopId());
+        List<ShopPhoto> shopPhotos = transferAddressToEntity(photoAddBody.getPhotoAddress(), photoAddBody.getId());
 
         try {
             if (shopPhotos.size()>0) {
@@ -120,7 +121,7 @@ public class ShopManageController extends BaseController {
                     return AjaxResult.success();
                 }
             }
-            return AjaxResult.error(ShopStatesEnum.INNER_ERROR.getInfo());
+            return AjaxResult.error(ShopPhotoStatusEnum.INNER_ERROR.getInfo());
         } catch (CustomException e) {
             ShopImgFileUtil.deleteImgFile(photoAddBody.getPhotoAddress());
             return AjaxResult.error(e.getMessage());
@@ -136,6 +137,7 @@ public class ShopManageController extends BaseController {
      */
     @PostMapping("/shopphoto/savephoto")
     public AjaxResult saveShopPhoto(@RequestParam("file") MultipartFile file) {
+        //TODO auth for currentUser
         String baseDir = ShopImgFileUtil.getShopBaseDir();
         log.debug("base dir {}", baseDir);
         try {
@@ -154,6 +156,7 @@ public class ShopManageController extends BaseController {
      */
     @PutMapping("/update/general")
     public AjaxResult updateShop(@RequestBody Shop shop) {
+        //TODO auth for currentUser
         if (shop==null || shop.getShopId()==null || shop.getShopId()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
         }
@@ -178,14 +181,15 @@ public class ShopManageController extends BaseController {
      */
     @PutMapping("/shopphoto/updatephoto")
     public AjaxResult updateShopPhoto(@RequestBody PhotoAddBody photoAddBody) {
-        if (photoAddBody==null || photoAddBody.getShopId()==null || photoAddBody.getShopId()<1
+        //TODO auth for currentUser
+        if (photoAddBody==null || photoAddBody.getId()==null || photoAddBody.getId()<1
                 || photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
         }
 
         try {
             // delete img from server
-            ShopPhotoOperationExecution spoe = shopPhotoService.selectShopPhotoListByShopId(photoAddBody.getShopId());
+            ShopPhotoOperationExecution spoe = shopPhotoService.selectShopPhotoListByShopId(photoAddBody.getId());
             if (spoe.getState() == ShopPhotoStatusEnum.INNER_ERROR.getState()) {
                 return AjaxResult.error(ShopPhotoStatusEnum.INNER_ERROR.getInfo());
             }
@@ -196,13 +200,13 @@ public class ShopManageController extends BaseController {
 
             // delete shop photo from db
             ShopPhotoOperationExecution spoe_delete =
-                    shopPhotoService.deleteShopPhotoByShopId(photoAddBody.getShopId());
+                    shopPhotoService.deleteShopPhotoByShopId(photoAddBody.getId());
 
             if (spoe_delete.getState()==ShopPhotoStatusEnum.SUCCESS.getState()
                     || spoe_delete.getState()==ShopPhotoStatusEnum.NO_PHOTO.getState()) {
                 // insert new shop photos to db
                 List<ShopPhoto> shopPhotos =
-                        transferAddressToEntity(photoAddBody.getPhotoAddress(), photoAddBody.getShopId());
+                        transferAddressToEntity(photoAddBody.getPhotoAddress(), photoAddBody.getId());
                 ShopPhotoOperationExecution spoe_insert = shopPhotoService.addShopPhotos(shopPhotos);
                 if (spoe_insert.getState() == ShopPhotoStatusEnum.SUCCESS.getState()) {
                     return AjaxResult.success();
@@ -222,6 +226,7 @@ public class ShopManageController extends BaseController {
 
     @DeleteMapping("/delete/{shopId}")
     public AjaxResult deleteShop(@PathVariable Long shopId) {
+        //TODO auth for currentUser
         if (shopId==null || shopId<1) {
             return AjaxResult.error(501, "Missing Required arguments");
         }

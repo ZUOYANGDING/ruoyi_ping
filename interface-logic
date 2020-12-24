@@ -9,4 +9,24 @@ Update shop:
 	call /shop/manage/shopphoto/updatephoto				add shop photo into db, delete old in db, delete old from server file storage
 
 Delete shop:
-	call /shop/manage/delele							
+	call /shop/manage/delele							delete shop photo from server file storage, shop photo from db, shop from db
+
+Fetch shop(userinfo necessary):
+	call /shop/manage/list								fetch shop by shop status, shop name, shop address, createTime, userId
+
+Create coupon:
+	call /coupon/manage/register  						add new coupon(only text info)					---->
+	call /coupon/manage/couponphoto/savephoto			add single coupon photo to server file storage	---->
+	call /coupon/manage/couponphoto/addphoto			add coupon photo into db						---->
+
+Update coupon:
+	call /coupon/manage/update/general 					update coupon info (only text info)				---->
+	call /coupon/manage/couponphoto/savephoto			add single coupon photo to server file storage	---->
+	call /coupon/manage/couponphoto/updatephoto			add coupon photo into db, delete old in db, delete old from server file storage
+
+Delete coupon:
+	call /coupon/manage/delele							delete coupon photo from server file storage, coupon photo from db, coupon from db
+
+Fetch coupon: 
+	call /coupon/manage/list							fetch coupon by couponId or time interval
+	call /coupon/manage/list/byprice					fetch coupon by coupon price interval

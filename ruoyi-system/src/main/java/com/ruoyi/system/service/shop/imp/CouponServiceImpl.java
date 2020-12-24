@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
@@ -97,6 +98,7 @@ public class CouponServiceImpl implements CouponService {
         //set up high bound and low bound
         BigDecimal high = priceInterval.get("high");
         BigDecimal low = priceInterval.get("low");
+        BigDecimal div = new BigDecimal("100");
         if (high==null && low==null) {
             high = new BigDecimal("100");
             low = new BigDecimal("0");
@@ -106,6 +108,8 @@ public class CouponServiceImpl implements CouponService {
             high = new BigDecimal("100");
         }
 
+        high = high.divide(div, 2, RoundingMode.UNNECESSARY);
+        low = low.divide(div, 2, RoundingMode.UNNECESSARY);
         log.debug("low bound {}", low);
         log.debug("high bound {}", high);
         try {

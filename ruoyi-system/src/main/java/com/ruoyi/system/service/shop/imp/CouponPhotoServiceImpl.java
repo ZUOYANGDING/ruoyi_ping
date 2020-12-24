@@ -137,4 +137,46 @@ public class CouponPhotoServiceImpl implements CouponPhotoService {
             throw new CustomException(e.getMessage());
         }
     }
+
+    @Override
+    @Transactional
+    public CouponPhotoOperationExecution deleteCouponPhotoByCouponId(Long couponId) {
+        if (couponId==null || couponId<1) {
+            return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.INNER_ERROR);
+        }
+
+        try {
+            int effRow = couponPhotoMapper.deleteCouponPhotoByCouponId(couponId);
+            if (effRow < 0) {
+                return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.INNER_ERROR);
+            } else if (effRow == 1){
+                return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.NO_PHOTO);
+            } else {
+                return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.SUCCESS);
+            }
+        } catch (RuntimeException e) {
+            throw new CustomException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public CouponPhotoOperationExecution deleteCouponPhotoByCouponIds(Long[] couponIds) {
+        if (couponIds==null || couponIds.length<1) {
+            return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.INNER_ERROR);
+        }
+
+        try {
+            int effRow = couponPhotoMapper.deleteCouponPhotoByCouponIds(couponIds);
+            if (effRow < 0) {
+                return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.INNER_ERROR);
+            } else if (effRow == 1){
+                return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.NO_PHOTO);
+            } else {
+                return new CouponPhotoOperationExecution(CouponPhotoStatusEnum.SUCCESS);
+            }
+        } catch (RuntimeException e) {
+            throw new CustomException(e.getMessage());
+        }
+    }
 }

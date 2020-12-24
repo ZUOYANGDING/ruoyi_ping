@@ -8,15 +8,15 @@ import java.util.List;
  * @author ruoyi
  */
 public class PhotoAddBody {
-    private Long shopId;
+    private Long id;
     private List<String> photoAddress;
 
-    public Long getShopId() {
-        return shopId;
+    public Long getId() {
+        return id;
     }
 
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<String> getPhotoAddress() {
