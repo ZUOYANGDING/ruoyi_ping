@@ -30,3 +30,10 @@ Delete coupon:
 Fetch coupon: 
 	call /coupon/manage/list							fetch coupon by couponId or time interval
 	call /coupon/manage/list/byprice					fetch coupon by coupon price interval
+
+
+
+Get permission:
+	call localhost:8080/captchaImage					get captcha's uuid to find captcha in redis	    			---->
+	call localhost:8080/login							{"code", "uuid", "username", "password"} to get token		---->
+	{Authorization, token} as header to call interface

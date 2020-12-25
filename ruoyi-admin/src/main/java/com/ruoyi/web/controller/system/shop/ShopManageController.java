@@ -4,11 +4,14 @@ package com.ruoyi.web.controller.system.shop;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.domain.model.PhotoAddBody;
 import com.ruoyi.common.enums.shop.ShopPhotoStatusEnum;
 import com.ruoyi.common.enums.shop.ShopStatesEnum;
 import com.ruoyi.common.exception.CustomException;
+import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.file.shop.ShopImgFileUtil;
+import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.domain.shop.Shop;
 import com.ruoyi.system.domain.shop.ShopPhoto;
 import com.ruoyi.system.dto.ShopOperationExecution;
@@ -19,6 +22,7 @@ import com.ruoyi.system.service.shop.ShopService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +47,9 @@ public class ShopManageController extends BaseController {
     @Autowired
     private ShopPhotoService shopPhotoService;
 
+    @Autowired
+    private TokenService tokenService;
+
     /**
      * filter shop by filters but with necessary userId
      * @param shop
@@ -50,8 +57,9 @@ public class ShopManageController extends BaseController {
      */
     @PostMapping("/list")
     public AjaxResult fetchShopList(@RequestBody Shop shop) {
-        //TODO auth for currentUser
-        SysUser currentUser = userService.selectUserByUserName("admin");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        String loginUserName = loginUser.getUsername();
+        SysUser currentUser = userService.selectUserByUserName(loginUserName);
         shop.setSysUser(currentUser);
 
         startPage();
@@ -82,8 +90,9 @@ public class ShopManageController extends BaseController {
             return AjaxResult.error(501, "Missing Required arguments");
         }
 
-        //TODO auth for currentUser
-        SysUser currentUser = userService.selectUserByUserName("admin");
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        String loginUserName = loginUser.getUsername();
+        SysUser currentUser = userService.selectUserByUserName(loginUserName);
         shop.setSysUser(currentUser);
 
         try {
