@@ -1,0 +1,31 @@
+name 				type				routing address					component router							interface								auth
+shop				M					shop							null										null									shop
+shop manage			C					manage							shop/manage/index							shop/manage/list						shop:manage:list
+fetch				F					null							null										shop/manage/list						shop:manage:list
+add 				F   				null							null										shop/manage/register 					shop:manage:add
+shop photo save	    F   				null   							null  										shop/manage/shopphoto/savephoto  		shop:manage:add
+shop photo add      F   				null							null										shop/manage/shopphoto/addphoto			shop:manage:add
+shop update general F  					null 							null										shop/manage/update/general				shop:manage:edit
+shop update photo   F 					null							null										shop/manage/shopphoto/updatephoto		shop:manage:edit
+shop delete         F 					null							null 										shop/manage/delete/{shopId} 			shop:manage:remove
+
+
+coupon              	M 					coupon                          null 									null 									coupon
+coupon manage       	C 					manage  						coupon/manage/index						coupon/manage/list 						coupon:manage:list
+fetch					F					null							null									couopon/manage/list						coupon:manage:list
+fetch by price      	F 					null 							null 									coupon/manage/list/byprice				coupon:manange:list
+add 					F   				null							null									couopn/manage/register 					coupon:manage:add
+couppon photo save	    F   				null   							null  									coupon/manage/couponphoto/savephoto  	coupon:manage:add
+coupon photo add      	F   				null							null									coupon/manage/couponphoto/addphoto		coupon:manage:add
+coupon update general 	F  					null 							null									coupon/manage/couponphoto/general		coupon:manage:edit
+coupon update photo   	F 					null							null									coupon/manage/couponphoto/updatephoto	coupon:manage:edit
+coupon delete         	F 					null							null 									coupon/manage/delete/{couponId} 		coupon:manage:remove
+
+
+
+dept new:
+ping 110
+user new:
+userId:3, username: ping, password:112357
+role new:
+roleId:3, roleAuth: owner

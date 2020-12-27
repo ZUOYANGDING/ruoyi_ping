@@ -22,6 +22,7 @@ import org.aspectj.weaver.loadtime.Aj;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,9 +59,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:list')")
     public AjaxResult fetchCoupon(@RequestBody CouponBody couponBody) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         if (couponBody==null || couponBody.getShopId()==null || couponBody.getShopId()<1) {
             return AjaxResult.error(501, "Missing Required Arguments");
         }
@@ -90,9 +90,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @GetMapping("/list/byprice")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:list')")
     public AjaxResult fetchCouponByPrice(@RequestParam("high") String high, @RequestParam("low") String low) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         Map<String, BigDecimal> priceInterval = new HashMap<>();
         if (high != null) {
             BigDecimal highPrice = new BigDecimal(high);
@@ -124,9 +123,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @PostMapping("/register")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:add')")
     public AjaxResult couponRegister(@RequestBody CouponBody couponBody) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         if (couponBody==null || couponBody.getShopId()==null
                 || couponBody.getShopId()<1) {
             return AjaxResult.error(501, "Missing Required Arguments");
@@ -152,9 +150,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @PostMapping("/couponphoto/addphoto")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:list')")
     public AjaxResult addCouponPhoto(@RequestBody PhotoAddBody photoAddBody) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         if (photoAddBody==null || photoAddBody.getId()==null || photoAddBody.getId()<1
                 || photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
             return AjaxResult.error(501, "Missing Required Arguments");
@@ -182,9 +179,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @PostMapping("/couponphoto/savephoto")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:list')")
     public AjaxResult saveCouponPhoto(@RequestParam("file") MultipartFile file) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         String baseDir = ShopImgFileUtil.getCouponBaseDir();
         log.debug("base dir {}", baseDir);
         try {
@@ -202,9 +198,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @PutMapping("/update/general")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:edit')")
     public AjaxResult updateCoupon(@RequestBody CouponBody couponBody) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         if (couponBody==null || couponBody.getCouponId()==null || couponBody.getCouponId()<1) {
             return AjaxResult.error(501, "Missing Required Arguments");
         }
@@ -229,9 +224,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @PutMapping("/couponphoto/updatephoto")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:edit')")
     public AjaxResult updateCouponPhoto(@RequestBody PhotoAddBody photoAddBody) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         if (photoAddBody==null || photoAddBody.getId()==null || photoAddBody.getId()<1
                 || photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
             return AjaxResult.error(501, "Miss Required Arguments");
@@ -281,9 +275,8 @@ public class CouponManagedController extends BaseController {
      * @return
      */
     @DeleteMapping("/delete/{couponId}")
+    @PreAuthorize("@ss.hasPermi('coupon:manage:remove')")
     public AjaxResult deleteCoupon(@PathVariable Long couponId) {
-        //TODO check login status
-        //TODO check login user is the shop owner
         if (couponId==null || couponId<1) {
             return AjaxResult.error(501, "Missing Required Arguments");
         }

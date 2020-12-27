@@ -33,7 +33,8 @@ insert into sys_dept values(106,  101, '0,100,101',  '财务部门',   4, '若�
 insert into sys_dept values(107,  101, '0,100,101',  '运维部门',   5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into sys_dept values(108,  102, '0,100,102',  '市场部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into sys_dept values(109,  102, '0,100,102',  '财务部门',   2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
-
+-- for ping test
+insert into sys_dept values(110,  0,   '0',          'ping',      6, 'ping', '1234567890', 'tes@qq.com', '0', '0', 'admin', sysdate(), '', null);
 
 -- ----------------------------
 -- 2、用户信息表
@@ -67,7 +68,8 @@ create table sys_user (
 -- ----------------------------
 insert into sys_user values(1,  103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '管理员');
 insert into sys_user values(2,  105, 'ry',    '若依', '00', 'ry@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, '测试员');
-
+-- for ping test
+insert into sys_user values(3, 110, 'ping', 'testuser', '00', 'test@qq.com', '1234567890', '0', '', '$2a$10$MPZnd2dNorg6AIwJTU3sPeb3XPDRXdmUI8UaWxR.NETpaCh5cSycu', '0', '0', '127.0.0.1', sysdate(), 'admin', sysdate(), '', null, 'test for ping');
 
 -- ----------------------------
 -- shop info table
@@ -185,6 +187,9 @@ create table sys_role (
 -- ----------------------------
 insert into sys_role values('1', '超级管理员',  'admin',  1, 1, 1, 1, '0', '0', 'admin', sysdate(), '', null, '超级管理员');
 insert into sys_role values('2', '普通角色',    'common', 2, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '普通角色');
+-- for ping test
+insert into sys_role values('3', 'shop owner', 'owner', 1, 1, 1, 1, '0', '0', 'admin', sysdate(), '', null, 'shop owner');
+
 
 
 -- ----------------------------
@@ -221,6 +226,9 @@ insert into sys_menu values('1', '系统管理', '0', '1', 'system',           n
 insert into sys_menu values('2', '系统监控', '0', '2', 'monitor',          null,   1, 0, 'M', '0', '0', '', 'monitor',  'admin', sysdate(), '', null, '系统监控目录');
 insert into sys_menu values('3', '系统工具', '0', '3', 'tool',             null,   1, 0, 'M', '0', '0', '', 'tool',     'admin', sysdate(), '', null, '系统工具目录');
 insert into sys_menu values('4', '若依官网', '0', '4', 'http://ruoyi.vip', null ,  0, 0, 'M', '0', '0', '', 'guide',    'admin', sysdate(), '', null, '若依官网地址');
+-- ping shop and coupon manage page
+insert into sys_menu values('5', 'shop',     '0', '1', 'shop',         null,   1, 0, 'M', '0', '0', '', 'shop',     'admin', sysdate(), '', null, 'shop menu');
+insert into sys_menu values('6', 'coupon',   '0', '2', 'coupon',       null,   1, 0, 'M', '0', '0', '', 'coupon',   'admin', sysdate(), '', null, 'coupon menu');
 -- 二级菜单
 insert into sys_menu values('100',  '用户管理', '1',   '1', 'user',       'system/user/index',        1, 0, 'C', '0', '0', 'system:user:list',        'user',          'admin', sysdate(), '', null, '用户管理菜单');
 insert into sys_menu values('101',  '角色管理', '1',   '2', 'role',       'system/role/index',        1, 0, 'C', '0', '0', 'system:role:list',        'peoples',       'admin', sysdate(), '', null, '角色管理菜单');
@@ -239,9 +247,33 @@ insert into sys_menu values('113',  '缓存监控', '2',   '5', 'cache',      'm
 insert into sys_menu values('114',  '表单构建', '3',   '1', 'build',      'tool/build/index',         1, 0, 'C', '0', '0', 'tool:build:list',         'build',         'admin', sysdate(), '', null, '表单构建菜单');
 insert into sys_menu values('115',  '代码生成', '3',   '2', 'gen',        'tool/gen/index',           1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 insert into sys_menu values('116',  '系统接口', '3',   '3', 'swagger',    'tool/swagger/index',       1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
+-- ping shop and manage page
+insert into sys_menu values('117',  'shop manage', '5', '1', 'manage',   'shop/manage/index',        1, 0, 'C', '0', '0', 'shop:manage:list',        'manage',        'admin', sysdate(), '', null, 'shop manage menu');
+insert into sys_menu values('118',  'coupon manage', '6', '1', 'manage',   'coupon/manage/index',    1, 0, 'C', '0', '0', 'coupon:manage:list',      'manage',        'admin', sysdate(), '', null, 'coupon manage menu');
+
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');
+
+--ping shop button
+insert into sys_menu values('1061', 'fetch shop',           '117', '1', '', '', 1, 0, 'F', '0', '0', 'shop:manage:list',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1062', 'add shop',             '117', '2', '', '', 1, 0, 'F', '0', '0', 'shop:manage:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1063', 'save shop photo',      '117', '3', '', '', 1, 0, 'F', '0', '0', 'shop:manage:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1064', 'add shop photo',       '117', '4', '', '', 1, 0, 'F', '0', '0', 'shop:manage:add',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1065', 'update shop general',  '117', '5', '', '', 1, 0, 'F', '0', '0', 'shop:manage:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1066', 'update shop photo',    '117', '6', '', '', 1, 0, 'F', '0', '0', 'shop:manage:edit',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1067', 'delete shop',          '117', '7', '', '', 1, 0, 'F', '0', '0', 'shop:manage:remove',       '#', 'admin', sysdate(), '', null, '');
+
+insert into sys_menu values('1068', 'fetch coupon',         '118', '1', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:list',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1069', 'add coupon',           '118', '2', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:add',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1070', 'save coupon photo',    '118', '3', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:add',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1071', 'add coupon photo',     '118', '4', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:add',        '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1072', 'update coupon general','118', '5', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:edit',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1073', 'update coupon photo',  '118', '6', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:edit',       '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1074', 'delete coupon',        '118', '7', '', '', 1, 0, 'F', '0', '0', 'coupon:manage:remove',     '#', 'admin', sysdate(), '', null, '');
+
+
+
 -- 用户管理按钮
 insert into sys_menu values('1001', '用户查询', '100', '1',  '', '', 1, 0, 'F', '0', '0', 'system:user:query',          '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1002', '用户新增', '100', '2',  '', '', 1, 0, 'F', '0', '0', 'system:user:add',            '#', 'admin', sysdate(), '', null, '');
@@ -316,7 +348,6 @@ insert into sys_menu values('1058', '导入代码', '115', '2', '#', '', 1, 0, '
 insert into sys_menu values('1059', '预览代码', '115', '4', '#', '', 1, 0, 'F', '0', '0', 'tool:gen:preview',           '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1060', '生成代码', '115', '5', '#', '', 1, 0, 'F', '0', '0', 'tool:gen:code',              '#', 'admin', sysdate(), '', null, '');
 
-
 -- ----------------------------
 -- 6、用户和角色关联表  用户N-1角色
 -- ----------------------------
@@ -332,6 +363,8 @@ create table sys_user_role (
 -- ----------------------------
 insert into sys_user_role values ('1', '1');
 insert into sys_user_role values ('2', '2');
+-- for ping test
+insert into sys_user_role values ('3', '3');
 
 
 -- ----------------------------
@@ -431,6 +464,26 @@ insert into sys_role_menu values ('2', '1057');
 insert into sys_role_menu values ('2', '1058');
 insert into sys_role_menu values ('2', '1059');
 insert into sys_role_menu values ('2', '1060');
+
+-- for ping test
+insert into sys_role_menu values ('3', '5');
+insert into sys_role_menu values ('3', '6');
+insert into sys_role_menu values ('3', '117');
+insert into sys_role_menu values ('3', '118');
+insert into sys_role_menu values ('3', '1061');
+insert into sys_role_menu values ('3', '1062');
+insert into sys_role_menu values ('3', '1063');
+insert into sys_role_menu values ('3', '1064');
+insert into sys_role_menu values ('3', '1065');
+insert into sys_role_menu values ('3', '1066');
+insert into sys_role_menu values ('3', '1067');
+insert into sys_role_menu values ('3', '1068');
+insert into sys_role_menu values ('3', '1069');
+insert into sys_role_menu values ('3', '1070');
+insert into sys_role_menu values ('3', '1071');
+insert into sys_role_menu values ('3', '1072');
+insert into sys_role_menu values ('3', '1073');
+insert into sys_role_menu values ('3', '1074');
 
 -- ----------------------------
 -- 8、角色和部门关联表  角色1-N部门

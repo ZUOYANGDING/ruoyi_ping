@@ -214,6 +214,7 @@ public class SysUserServiceImpl implements ISysUserService
         // 新增用户信息
         int rows = userMapper.insertUser(user);
         // 新增用户岗位关联
+        // TODO make sure if need to use it later
         insertUserPost(user);
         // 新增用户与角色管理
         insertUserRole(user);

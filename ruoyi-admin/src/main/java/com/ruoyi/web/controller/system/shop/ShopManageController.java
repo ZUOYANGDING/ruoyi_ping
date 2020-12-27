@@ -56,6 +56,7 @@ public class ShopManageController extends BaseController {
      * @return
      */
     @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermi('shop:manage:list')")
     public AjaxResult fetchShopList(@RequestBody Shop shop) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         String loginUserName = loginUser.getUsername();
@@ -85,6 +86,7 @@ public class ShopManageController extends BaseController {
      * @return
      */
     @PostMapping("/register")
+    @PreAuthorize("@ss.hasPermi('shop:manage:add')")
     public AjaxResult shopRegister(@RequestBody Shop shop) {
         if (shop==null || shop.getShopName()==null) {
             return AjaxResult.error(501, "Missing Required arguments");
@@ -114,8 +116,8 @@ public class ShopManageController extends BaseController {
      * @return
      */
     @PostMapping("/shopphoto/addphoto")
+    @PreAuthorize("@ss.hasPermi('shop:manage:add')")
     public AjaxResult addShopPhoto(@RequestBody PhotoAddBody photoAddBody) {
-        //TODO auth for currentUser
         if (photoAddBody==null || photoAddBody.getId()==null || photoAddBody.getId()<1 ||
                 photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
@@ -145,8 +147,8 @@ public class ShopManageController extends BaseController {
      * @return
      */
     @PostMapping("/shopphoto/savephoto")
+    @PreAuthorize("@ss.hasPermi('shop:manage:add')")
     public AjaxResult saveShopPhoto(@RequestParam("file") MultipartFile file) {
-        //TODO auth for currentUser
         String baseDir = ShopImgFileUtil.getShopBaseDir();
         log.debug("base dir {}", baseDir);
         try {
@@ -164,8 +166,8 @@ public class ShopManageController extends BaseController {
      * @return
      */
     @PutMapping("/update/general")
+    @PreAuthorize("@ss.hasPermi('shop:manage:edit')")
     public AjaxResult updateShop(@RequestBody Shop shop) {
-        //TODO auth for currentUser
         if (shop==null || shop.getShopId()==null || shop.getShopId()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
         }
@@ -189,8 +191,8 @@ public class ShopManageController extends BaseController {
      * @return
      */
     @PutMapping("/shopphoto/updatephoto")
+    @PreAuthorize("@ss.hasPermi('shop:manage:edit')")
     public AjaxResult updateShopPhoto(@RequestBody PhotoAddBody photoAddBody) {
-        //TODO auth for currentUser
         if (photoAddBody==null || photoAddBody.getId()==null || photoAddBody.getId()<1
                 || photoAddBody.getPhotoAddress()==null || photoAddBody.getPhotoAddress().size()<1) {
             return AjaxResult.error(501, "Missing Required arguments");
@@ -234,8 +236,8 @@ public class ShopManageController extends BaseController {
     }
 
     @DeleteMapping("/delete/{shopId}")
+    @PreAuthorize("@ss.hasPermi('shop:manage:remove')")
     public AjaxResult deleteShop(@PathVariable Long shopId) {
-        //TODO auth for currentUser
         if (shopId==null || shopId<1) {
             return AjaxResult.error(501, "Missing Required arguments");
         }
