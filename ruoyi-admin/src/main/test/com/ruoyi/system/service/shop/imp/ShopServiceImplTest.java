@@ -84,7 +84,7 @@ public class ShopServiceImplTest {
     @Test
     public void updateShopStatusTest() {
         Shop shop = new Shop();
-        shop.setShopId(106L);
+        shop.setShopId(102L);
         shop.setStatus("0");
         ShopOperationExecution soe = shopService.updateShopStates(shop);
         assertNotNull(soe);

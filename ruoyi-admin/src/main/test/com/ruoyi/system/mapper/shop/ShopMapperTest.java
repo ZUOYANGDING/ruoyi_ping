@@ -76,7 +76,7 @@ public class ShopMapperTest {
     @Test
     public void updateShopTest() {
         Shop shop = new Shop();
-        shop.setShopId(103L);
+        shop.setShopId(102L);
         shop.setShopName("test shop 3 update");
         shop.setAddress("test shop 3 update");
         shop.setStatus("0");
