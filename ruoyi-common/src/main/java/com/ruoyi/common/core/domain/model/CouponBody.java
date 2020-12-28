@@ -1,5 +1,7 @@
 package com.ruoyi.common.core.domain.model;
 
+import java.util.List;
+
 public class CouponBody {
     private Long shopId;
     private Long couponId;
@@ -8,6 +10,8 @@ public class CouponBody {
     private String couponDesc;
     private String startTime;
     private String endTime;
+    private String high;
+    private String low;
 
     public Long getShopId() {
         return shopId;
@@ -63,5 +67,21 @@ public class CouponBody {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getHigh() {
+        return high;
+    }
+
+    public void setHigh(String high) {
+        this.high = high;
+    }
+
+    public String getLow() {
+        return low;
+    }
+
+    public void setLow(String low) {
+        this.low = low;
     }
 }

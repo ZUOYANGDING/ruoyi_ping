@@ -65,7 +65,7 @@
     <select id="selectCouponList" parameterType="com.ruoyi.system.domain.shop.Coupon" resultMap="couponResult">
         <include refid="selectCouponVo"/>
         <where>
-            <if test="shop != null and shop.shopId = null and shop.shopId != 0">
+            <if test="shop != null and shop.shopId != null and shop.shopId != 0">
                 AND co.shop_id = #{shop.shopId}
             </if>
             <if test="startTime != null">

@@ -39,11 +39,11 @@ public class CouponServiceImplTest {
 
     @Test
     public void getCouponListTest() {
-//        Shop shop = new Shop();
-//        shop.setShopId(100L);
+        Shop shop = new Shop();
+        shop.setShopId(100L);
         Coupon coupon = new Coupon();
-        coupon.setCouponCode("test coupon code");
-//        coupon.setShop(shop);
+//        coupon.setCouponCode("test coupon code");
+        coupon.setShop(shop);
         CouponOperationExecution coe = couponService.getCouponList(coupon);
         assertNotNull(coe);
         coe.getCouponList().stream().forEach(coupon1 -> {

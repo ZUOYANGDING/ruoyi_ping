@@ -67,15 +67,15 @@ public class CouponMapperTest {
         Coupon coupon = new Coupon();
 
         coupon.setShop(shop);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date startDate = simpleDateFormat.parse("2020-12-19 00:00:00");
-            Date endDate = simpleDateFormat.parse("2020-12-31 00:00:00");
-            coupon.setStartTime(startDate);
-            coupon.setEndTime(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            Date startDate = simpleDateFormat.parse("2020-12-19 00:00:00");
+//            Date endDate = simpleDateFormat.parse("2020-12-31 00:00:00");
+//            coupon.setStartTime(startDate);
+//            coupon.setEndTime(endDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         List<Coupon> couponList = couponMapper.selectCouponList(coupon);
         assertNotNull(couponList);
         couponList.stream().forEach(coupon1 -> {
