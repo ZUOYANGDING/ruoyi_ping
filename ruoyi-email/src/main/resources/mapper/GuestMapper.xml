@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.email.mapper.GuestMapper">
+    <resultMap id="guestResult" type="com.ruoyi.common.core.domain.entity.Guest">
+        <id         property="guestId"          column="guest_id"/>
+        <result     property="guestEmail"       column="guest_email"/>
+    </resultMap>
+
+    <sql id="selectGuestVo">
+        select g.guest_id, g.guest_email
+        from tb_guest as g
+    </sql>
+
+    <select id="selectGuestById" resultMap="guestResult">
+        <include refid="selectGuestVo"/>
+        where g.guest_id = #{guestId}
+    </select>
+
+    <insert id="insertGuest" parameterType="com.ruoyi.common.core.domain.entity.Guest" useGeneratedKeys="true" keyProperty="guestId">
+        insert into tb_guest(
+            <if test="guestEmail != null and guestEmail != ''">guest_email</if>
+        ) value (
+            <if test="guestEmail != null and guestEmail != ''">#{guestEmail}</if>
+        )
+    </insert>
+
+    <delete id="deleteGuestById" parameterType="Long">
+        delete from tb_guest
+        where guest_id = #{guestId}
+    </delete>
+
+    <delete id="deleteGuestByIds" parameterType="Long">
+        delete from tb_guest
+        where guest_id in
+        <foreach collection="array" item="guestId" open="(" separator="," close=")">
+            #{guestId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteGuestByEmail" parameterType="String">
+        delete from tb_guest
+        where guest_email = #{guestEmail}
+    </delete>
+</mapper>

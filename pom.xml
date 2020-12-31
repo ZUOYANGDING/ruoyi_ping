@@ -186,6 +186,13 @@
                 <artifactId>ruoyi-system</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
+
+            <!--  邮件模块           -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-email</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
 			
             <!-- 通用工具-->
             <dependency>
@@ -204,6 +211,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-email</module>
     </modules>
     <packaging>pom</packaging>
 

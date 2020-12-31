@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.email.mapper.EmailMapper">
+    <resultMap id="emailResult" type="com.ruoyi.common.core.domain.entity.Email">
+        <id         property="emailId"          column="email_id"/>
+        <result     property="userId"           column="user_id"/>
+        <result     property="toEmail"          column="to_email"/>
+        <result     property="subject"          column="subject"/>
+        <result     property="content"          column="content"/>
+        <result     property="attachment"       column="attachment"/>
+        <result     property="sendFlag"         column="send_flag"/>
+        <result     property="emailType"        column="email_type"/>
+        <result     property="planTime"         column="plan_time"/>
+        <result     property="sendTime"         column="send_time"/>
+    </resultMap>
+
+    <sql id="selectEmailVo">
+        select e.email_id, e.user_id, e.to_email, e.subject, e.content, e.attachment, e.send_flag, e.email_type,
+        e.plan_time, e.send_time
+        from tb_email e
+    </sql>
+
+    <select id="selectEmailById" resultMap="emailResult">
+        <include refid="selectEmailVo"/>
+        where e.email_id = #{emailId}
+    </select>
+
+    <select id="selectEmailList" parameterType="com.ruoyi.common.core.domain.entity.Email" resultMap="emailResult">
+        <include refid="selectEmailVo"/>
+        <where>
+            <if test="emailId != null and  emailId != 0">
+                AND e.email_id = #{emailId}
+            </if>
+            <if test="userId != null and userId != 0">
+                AND e.user_id = #{userId}
+            </if>
+            <if test="toEmail != null and toEmail != ''">
+                AND e.to_email = #{toEmail}
+            </if>
+            <if test="sendFlag !=null and sendFlag != ''">
+                AND e.send_flag = #{sendFlag}
+            </if>
+            <if test="emailType != null and emailType != ''">
+                AND email_type = #{emailType}
+            </if>
+            <if test="planTime != null">
+                AND date_format(e.plan_time, '%Y-%m-%d') &lt;= date_format(#{planTime}, '%Y-%m-%d')
+            </if>
+            <if test="sendTime != null">
+                AND date_format(e.send_time, '%y-%m-%d') &gt;= date_format(#{sendTime}, '%y-%m-%d')
+            </if>
+        </where>
+    </select>
+
+    <update id="updateEmail" parameterType="com.ruoyi.common.core.domain.entity.Email">
+        update tb_Email
+        <set>
+            <if test="sendFlag != null and sendFlag != ''">send_flag = #{sendFlag},</if>
+            <if test="emailType != null and emailType != ''">email_type = #{emailType},</if>
+            <if test="planTime != null">plan_time = #{planTime},</if>
+            <if test="sendTime != null">send_time = #{sendTime}</if>
+        </set>
+        where email_id = #{emailId}
+    </update>
+
+    <insert id="createEmail" parameterType="com.ruoyi.common.core.domain.entity.Email" useGeneratedKeys="true" keyProperty="emailId">
+        insert into tb_email(
+            <if test="userId != null and userId != 0">user_id,</if>
+            <if test="toEmail != null and toEmail != ''">to_email,</if>
+            <if test="subject != null and subject != ''">subject,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="attachment != null and attachment != ''">attachment,</if>
+            <if test="sendFlag != null and sendFlag != ''">send_flag,</if>
+            <if test="emailType != null and emailType != ''">email_type,</if>
+            <if test="planTime != null">plan_time,</if>
+            <if test="sendTime != null">send_time</if>
+        ) values (
+            <if test="userId != null and userId != 0">#{userId},</if>
+            <if test="toEmail != null and toEmail != ''">#{toEmail},</if>
+            <if test="subject != null and subject != ''">#{subject},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="attachment != null and attachment != ''">#{attachment},</if>
+            <if test="sendFlag != null and sendFlag != ''">#{sendFlag},</if>
+            <if test="emailType != null and emailType != ''">#{emailType},</if>
+            <if test="planTime != null">#{planTime},</if>
+            <if test="sendTime != null">#{sendTime}</if>
+        )
+    </insert>
+
+    <delete id="deleteEmailById" parameterType="Long">
+        delete from tb_email
+        where email_id = #{emailId}
+    </delete>
+
+    <delete id="deleteEmailByIds" parameterType="Long">
+        delete from tb_email
+        where email_id in
+        <foreach collection="array" item="emailId" open="(" separator="," close=")">
+            #{emailId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteEmailByEmailAddr" parameterType="String">
+        delete from tb_email
+        where to_email = #{toEmail}
+    </delete>
+</mapper>

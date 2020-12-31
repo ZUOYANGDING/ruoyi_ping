@@ -20,7 +20,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
-public class SysUser extends BaseEntity
+public class
+
+SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

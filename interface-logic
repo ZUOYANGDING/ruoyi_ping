@@ -37,3 +37,7 @@ Get permission:
 	call localhost:8080/captchaImage					get captcha's uuid to find captcha in redis	    			---->
 	call localhost:8080/login							{"code", "uuid", "username", "password"} to get token		---->
 	{Authorization, token} as header to call interface
+
+Index Page:
+	call /index/all										fetch all coupons
+	call /index/filter									fetch coupons by filter, all filters can be optional

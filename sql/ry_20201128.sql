@@ -133,6 +133,37 @@ create table tb_coupon_photo
 ) engine=innodb auto_increment=100 comment='coupon photo table';
 
 -- ----------------------------
+-- email table
+-- ---------------------------
+drop table if exists tb_email;
+create table tb_email
+(
+    email_id        bigint(20)          not null auto_increment     comment 'email Id',
+    user_id         bigint(20)          not null                    comment 'acceptor id',
+    to_email        varchar(50)         default ''                  comment 'acceptor email',
+    subject         varchar(255)        default ''                  comment 'email subject',
+    content         text                                            comment 'email content',
+    attachment      varchar(255)        default ''                  comment 'email attachment',
+    send_flag       char(1)             default '0'                 comment 'email sent or not',
+    email_type      char(1)             default '0'                 comment 'plan sending or not',
+    plan_time       datetime                                        comment 'plan time for send',
+    send_time       datetime                                        comment 'email send time',
+    primary key(email_id)
+) engine=innodb auto_increment=100 comment='email info table';
+
+-- ----------------------------
+-- guest record table
+-- ---------------------------
+drop table if exists tb_guest;
+create table tb_guest
+(
+    guest_id        bigint(20)          not null auto_increment     comment 'user id',
+    guest_email     varchar(50)         default ''                  comment 'guest email',
+    primary key(guest_id)
+) engine=innodb auto_increment=100 comment='guest info table';
+
+
+-- ----------------------------
 -- 3、岗位信息表
 -- ----------------------------
 drop table if exists sys_post;

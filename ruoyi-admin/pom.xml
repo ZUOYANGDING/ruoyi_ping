@@ -73,6 +73,12 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!-- 邮件发送       -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-email</artifactId>
+        </dependency>
+
         <!--    代码测试    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
