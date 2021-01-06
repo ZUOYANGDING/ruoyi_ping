@@ -29,15 +29,19 @@
 
     <insert id="insertShopPhoto" parameterType="com.ruoyi.system.domain.shop.ShopPhoto" useGeneratedKeys="true" keyProperty="photoId">
         insert into tb_shop_photo(
-            <if test="photoId != null and photoId != 0">photo_id,</if>
-            <if test="photo != null and photo != ''">photo,</if>
-            <if test="shopId != null and shopId != 0">shop_id,</if>
-            create_time, update_time
+            <trim prefix="" suffixOverrides=",">
+                <if test="photoId != null and photoId != 0">photo_id,</if>
+                <if test="photo != null and photo != ''">photo,</if>
+                <if test="shopId != null and shopId != 0">shop_id,</if>
+                create_time, update_time
+            </trim>
         )values (
-            <if test="photoId != null and photoId != 0">#{photoId},</if>
-            <if test="photo != null and photo != ''">#{photo},</if>
-            <if test="shopId != null and shopId != 0">#{shopId},</if>
-            sysdate(), sysdate()
+            <trim prefix="" suffixOverrides=",">
+                <if test="photoId != null and photoId != 0">#{photoId},</if>
+                <if test="photo != null and photo != ''">#{photo},</if>
+                <if test="shopId != null and shopId != 0">#{shopId},</if>
+                sysdate(), sysdate()
+            </trim>
         )
     </insert>
 

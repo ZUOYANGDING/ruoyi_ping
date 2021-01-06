@@ -44,21 +44,25 @@
 
     <insert id="insertCoupon" parameterType="com.ruoyi.system.domain.shop.Coupon" useGeneratedKeys="true" keyProperty="couponId">
         insert into tb_coupon(
-            <if test="couponId != null and couponId != 0">coupon_id,</if>
-            <if test="couponPrice != null">coupon_price,</if>
-            <if test="couponCode != null and couponCode != ''">coupon_code,</if>
-            <if test="couponDesc != null and couponDesc != ''">coupon_desc,</if>
-            <if test="shop.shopId != null and shop.shopId != 0">shop_id,</if>
-            <if test="startTime != null">start_time,</if>
-            <if test="endTime != null">end_time</if>
+            <trim prefix="" suffixOverrides=",">
+                <if test="couponId != null and couponId != 0">coupon_id,</if>
+                <if test="couponPrice != null">coupon_price,</if>
+                <if test="couponCode != null and couponCode != ''">coupon_code,</if>
+                <if test="couponDesc != null and couponDesc != ''">coupon_desc,</if>
+                <if test="shop.shopId != null and shop.shopId != 0">shop_id,</if>
+                <if test="startTime != null">start_time,</if>
+                <if test="endTime != null">end_time</if>
+            </trim>
         ) values (
-            <if test="couponId != null and couponId != 0">#{couponId},</if>
-            <if test="couponPrice != null">#{couponPrice},</if>
-            <if test="couponCode != null and couponCode != ''">#{couponCode},</if>
-            <if test="couponDesc != null and couponDesc != ''">#{couponDesc},</if>
-            <if test="shop.shopId != null and shop.shopId != 0">#{shop.shopId},</if>
-            <if test="startTime != null">#{startTime},</if>
-            <if test="endTime != null">#{endTime}</if>
+            <trim>
+                <if test="couponId != null and couponId != 0">#{couponId},</if>
+                <if test="couponPrice != null">#{couponPrice},</if>
+                <if test="couponCode != null and couponCode != ''">#{couponCode},</if>
+                <if test="couponDesc != null and couponDesc != ''">#{couponDesc},</if>
+                <if test="shop.shopId != null and shop.shopId != 0">#{shop.shopId},</if>
+                <if test="startTime != null">#{startTime},</if>
+                <if test="endTime != null">#{endTime}</if>
+            </trim>
         )
     </insert>
 

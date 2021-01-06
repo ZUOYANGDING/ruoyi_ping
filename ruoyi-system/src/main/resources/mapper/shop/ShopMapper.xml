@@ -49,21 +49,25 @@
 
     <insert id="insertShop" parameterType="com.ruoyi.system.domain.shop.Shop" useGeneratedKeys="true" keyProperty="shopId">
         insert into tb_shop(
-            <if test="shopId != null and shopId != 0">shop_id,</if>
-            <if test="status != null and status != ''">status,</if>
-            <if test="shopName != null and shopName != ''">shop_name,</if>
-            <if test="description != null and description != ''">description,</if>
-            <if test="address != null and address != ''">address,</if>
-            <if test="sysUser.userId !=null and sysUser.userId != 0">user_id,</if>
-            create_time, update_time
+            <trim prefix="" suffixOverrides=",">
+                <if test="shopId != null and shopId != 0">shop_id,</if>
+                <if test="status != null and status != ''">status,</if>
+                <if test="shopName != null and shopName != ''">shop_name,</if>
+                <if test="description != null and description != ''">description,</if>
+                <if test="address != null and address != ''">address,</if>
+                <if test="sysUser.userId !=null and sysUser.userId != 0">user_id,</if>
+                create_time, update_time
+            </trim>
         ) values(
-            <if test="shopId != null and shopId != 0">#{shopId},</if>
-            <if test="status != null and status != ''">#{status},</if>
-            <if test="shopName != null and shopName != ''">#{shopName},</if>
-            <if test="description != null and description != ''">#{description},</if>
-            <if test="address != null and address != ''">#{address},</if>
-            <if test="sysUser.userId !=null and sysUser.userId != 0">#{sysUser.userId},</if>
-            sysdate(), sysdate()
+            <trim prefix="" suffixOverrides=",">
+                <if test="shopId != null and shopId != 0">#{shopId},</if>
+                <if test="status != null and status != ''">#{status},</if>
+                <if test="shopName != null and shopName != ''">#{shopName},</if>
+                <if test="description != null and description != ''">#{description},</if>
+                <if test="address != null and address != ''">#{address},</if>
+                <if test="sysUser.userId !=null and sysUser.userId != 0">#{sysUser.userId},</if>
+                sysdate(), sysdate()
+            </trim>
         )
     </insert>
 

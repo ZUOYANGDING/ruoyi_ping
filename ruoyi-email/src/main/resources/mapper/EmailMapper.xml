@@ -67,25 +67,29 @@
 
     <insert id="createEmail" parameterType="com.ruoyi.common.core.domain.entity.Email" useGeneratedKeys="true" keyProperty="emailId">
         insert into tb_email(
-            <if test="userId != null and userId != 0">user_id,</if>
-            <if test="toEmail != null and toEmail != ''">to_email,</if>
-            <if test="subject != null and subject != ''">subject,</if>
-            <if test="content != null and content != ''">content,</if>
-            <if test="attachment != null and attachment != ''">attachment,</if>
-            <if test="sendFlag != null and sendFlag != ''">send_flag,</if>
-            <if test="emailType != null and emailType != ''">email_type,</if>
-            <if test="planTime != null">plan_time,</if>
-            <if test="sendTime != null">send_time</if>
+            <trim prefix="" suffixOverrides=",">
+                <if test="userId != null and userId != 0">user_id,</if>
+                <if test="toEmail != null and toEmail != ''">to_email,</if>
+                <if test="subject != null and subject != ''">subject,</if>
+                <if test="content != null and content != ''">content,</if>
+                <if test="attachment != null and attachment != ''">attachment,</if>
+                <if test="sendFlag != null and sendFlag != ''">send_flag,</if>
+                <if test="emailType != null and emailType != ''">email_type,</if>
+                <if test="planTime != null">plan_time,</if>
+                <if test="sendTime != null">send_time</if>
+            </trim>
         ) values (
-            <if test="userId != null and userId != 0">#{userId},</if>
-            <if test="toEmail != null and toEmail != ''">#{toEmail},</if>
-            <if test="subject != null and subject != ''">#{subject},</if>
-            <if test="content != null and content != ''">#{content},</if>
-            <if test="attachment != null and attachment != ''">#{attachment},</if>
-            <if test="sendFlag != null and sendFlag != ''">#{sendFlag},</if>
-            <if test="emailType != null and emailType != ''">#{emailType},</if>
-            <if test="planTime != null">#{planTime},</if>
-            <if test="sendTime != null">#{sendTime}</if>
+            <trim prefix="" suffixOverrides=",">
+                <if test="userId != null and userId != 0">#{userId},</if>
+                <if test="toEmail != null and toEmail != ''">#{toEmail},</if>
+                <if test="subject != null and subject != ''">#{subject},</if>
+                <if test="content != null and content != ''">#{content},</if>
+                <if test="attachment != null and attachment != ''">#{attachment},</if>
+                <if test="sendFlag != null and sendFlag != ''">#{sendFlag},</if>
+                <if test="emailType != null and emailType != ''">#{emailType},</if>
+                <if test="planTime != null">#{planTime},</if>
+                <if test="sendTime != null">#{sendTime}</if>
+            </trim>
         )
     </insert>
 

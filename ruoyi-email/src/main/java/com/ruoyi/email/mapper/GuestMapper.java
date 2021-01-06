@@ -19,6 +19,13 @@ public interface GuestMapper {
     public Guest selectGuestById(Long guestId);
 
     /**
+     * select guest by guest email
+     * @param emailAddr
+     * @return
+     */
+    public Guest selectGuestByEmail(String emailAddr);
+
+    /**
      * insert new guest
      * @param guest
      * @return

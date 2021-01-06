@@ -18,6 +18,11 @@
         where g.guest_id = #{guestId}
     </select>
 
+    <select id="selectGuestByEmail" resultMap="guestResult">
+        <include refid="selectGuestVo"/>
+        where g.guest_email = #{guestEmail}
+    </select>
+
     <insert id="insertGuest" parameterType="com.ruoyi.common.core.domain.entity.Guest" useGeneratedKeys="true" keyProperty="guestId">
         insert into tb_guest(
             <if test="guestEmail != null and guestEmail != ''">guest_email</if>

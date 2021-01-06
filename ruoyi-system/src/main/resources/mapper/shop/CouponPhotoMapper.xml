@@ -28,15 +28,19 @@
 
     <insert id="insertCouponPhoto" parameterType="com.ruoyi.system.domain.shop.CouponPhoto" useGeneratedKeys="true" keyProperty="photoId">
         insert into tb_coupon_photo(
-            <if test="photoId != null and photoId != 0">photo_id,</if>
-            <if test="couponId != null and couponId != 0">coupon_id,</if>
-            <if test="photo != null and photo != ''">photo,</if>
-            create_time
+            <trim prefix="" suffixOverrides=",">
+                <if test="photoId != null and photoId != 0">photo_id,</if>
+                <if test="couponId != null and couponId != 0">coupon_id,</if>
+                <if test="photo != null and photo != ''">photo,</if>
+                create_time
+            </trim>
         ) values (
-            <if test="photoId != null and photoId != 0">#{photoId},</if>
-            <if test="couponId != null and couponId != 0">#{couponId},</if>
-            <if test="photo != null and photo != ''">#{photo},</if>
-            sysdate()
+            <trim prefix="" suffixOverrides=",">
+                <if test="photoId != null and photoId != 0">#{photoId},</if>
+                <if test="couponId != null and couponId != 0">#{couponId},</if>
+                <if test="photo != null and photo != ''">#{photo},</if>
+                sysdate()
+            </trim>
         )
     </insert>
 
