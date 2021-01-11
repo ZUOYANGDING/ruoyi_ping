@@ -76,6 +76,24 @@ spring:
         max-active: 8
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
+  # email setting
+  mail:
+      host: smtp.163.com
+      username: zuoyangdingtest@163.com
+#      TODO add password:
+      properties:
+        from: zuoyangdingtest@163.com
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+              required: true
+
+      protocol: smtp
+      default-encoding: UTF-8
+      test-connection: true
+
 
 # token配置
 token:
@@ -117,3 +135,4 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
