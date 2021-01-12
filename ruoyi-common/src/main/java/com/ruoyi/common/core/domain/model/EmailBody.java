@@ -9,8 +9,6 @@ public class EmailBody {
     private String couponDesc;
     private String startTime;
     private String endTime;
-    private String high;
-    private String low;
 
     public String getUserEmail() {
         return userEmail;
@@ -76,19 +74,4 @@ public class EmailBody {
         this.endTime = endTime;
     }
 
-    public String getHigh() {
-        return high;
-    }
-
-    public void setHigh(String high) {
-        this.high = high;
-    }
-
-    public String getLow() {
-        return low;
-    }
-
-    public void setLow(String low) {
-        this.low = low;
-    }
 }

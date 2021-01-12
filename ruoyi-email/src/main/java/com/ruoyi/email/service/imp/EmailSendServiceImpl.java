@@ -12,8 +12,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * email send implementation
+ *
+ * @author zuoyangding
+ */
 @Service
-
 public class EmailSendServiceImpl implements EmailSendService {
     private final Logger log = LoggerFactory.getLogger(EmailSendServiceImpl.class);
 
@@ -22,7 +26,7 @@ public class EmailSendServiceImpl implements EmailSendService {
 
 
     @Override
-    public EmailVo sendEmail(EmailVo emailVo) {
+    public EmailVo sendEmail(EmailVo emailVo) throws RuntimeException{
         try {
             checkMail(emailVo);
             sendMimeMail(emailVo);
@@ -35,6 +39,10 @@ public class EmailSendServiceImpl implements EmailSendService {
 
     }
 
+    /**
+     * check email's params
+     * @param emailVo
+     */
     private void checkMail(EmailVo emailVo) {
         if (StringUtils.isEmpty(emailVo.getToEmail())) {
             throw new RuntimeException("email receiver is null");
@@ -47,6 +55,10 @@ public class EmailSendServiceImpl implements EmailSendService {
         }
     }
 
+    /**
+     * send email with attachment
+     * @param emailVo
+     */
     private void sendMimeMail(EmailVo emailVo) {
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailSender.createMimeMessage(), true);

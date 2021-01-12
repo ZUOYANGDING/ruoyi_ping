@@ -1,19 +1,32 @@
 package com.ruoyi.web.controller.system.shop;
 
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.Email;
 import com.ruoyi.common.core.domain.model.CouponBody;
+import com.ruoyi.common.core.domain.model.EmailBody;
+import com.ruoyi.common.core.domain.model.EmailVo;
 import com.ruoyi.common.enums.shop.CouponStatusEnum;
+import com.ruoyi.common.enums.shop.EmailStateEnum;
 import com.ruoyi.common.exception.CustomException;
+import com.ruoyi.common.utils.file.shop.ShopImgFileUtil;
+import com.ruoyi.email.dto.EmailOperationExecution;
+import com.ruoyi.email.service.EmailSendService;
+import com.ruoyi.email.service.EmailService;
 import com.ruoyi.system.domain.shop.Coupon;
+import com.ruoyi.system.domain.shop.CouponPhoto;
 import com.ruoyi.system.domain.shop.Shop;
 import com.ruoyi.system.dto.CouponOperationExecution;
+import com.ruoyi.system.dto.CouponPhotoOperationExecution;
 import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service.shop.CouponPhotoService;
 import com.ruoyi.system.service.shop.CouponService;
 import com.ruoyi.system.service.shop.ShopService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -41,6 +54,16 @@ public class IndexController {
 
     @Autowired
     CouponService couponService;
+
+    @Autowired
+    CouponPhotoService couponPhotoService;
+
+    @Autowired
+    EmailSendService emailSendService;
+
+    @Autowired
+    EmailService emailService;
+
 
     @GetMapping("/all")
     public AjaxResult fetchAllCoupon(){
@@ -125,6 +148,34 @@ public class IndexController {
         }
     }
 
+    @PostMapping("/sendemail")
+    public AjaxResult sendEmail(@RequestBody EmailBody emailBody) {
+        if (checkTheEmailBody(emailBody)) {
+            return AjaxResult.error(500, "Missing required Arguments");
+        }
+        EmailVo emailVo = setUpEmailTemplate(emailBody);
+        try {
+            EmailVo send_result = emailSendService.sendEmail(emailVo);
+            Email email = parseEmailVoToEmail(send_result);
+            if (send_result.getStatus().equals("ok")) {
+                try {
+                    EmailOperationExecution eoe = emailService.addEmail(email, true);
+                    if (eoe.getState() == EmailStateEnum.SUCCESS.getState()) {
+                        return AjaxResult.success();
+                    } else {
+                        return AjaxResult.error(eoe.getStateInfo());
+                    }
+                } catch (RuntimeException e) {
+                    return AjaxResult.error(e.getMessage());
+                }
+            } else {
+                return AjaxResult.error("send email failed");
+            }
+        } catch (RuntimeException e) {
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
     /**
      * transfer http body to coupon entity
      * @param couponBody
@@ -174,5 +225,120 @@ public class IndexController {
             coupon.setEndTime(endTime);
         }
         return coupon;
+    }
+
+    /**
+     * check email params
+     * @param emailBody
+     * @return
+     */
+    private Boolean checkTheEmailBody(EmailBody emailBody) {
+        if (emailBody == null) {
+            return false;
+        }
+        if (emailBody.getCouponId() == null || emailBody.getCouponId() < 1) {
+            return false;
+        }
+        if (emailBody.getUserEmail() == null || emailBody.getUserEmail().equals("")) {
+            return false;
+        }
+        if (emailBody.getCouponPrice() == null || emailBody.getCouponPrice().equals("")) {
+            return false;
+        }
+        if (emailBody.getCouponDesc() == null || emailBody.getCouponDesc().equals("")) {
+            return false;
+        }
+        if (emailBody.getCouponCode() == null || emailBody.getCouponCode().equals("")) {
+            return false;
+        }
+        if (emailBody.getStartTime() == null || emailBody.getStartTime().equals("")) {
+            return false;
+        }
+        if (emailBody.getEndTime() == null || emailBody.getEndTime().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * create Email template
+     * @param emailBody
+     * @return
+     */
+    private EmailVo setUpEmailTemplate(EmailBody emailBody) {
+        EmailVo emailVo = new EmailVo();
+        emailVo.setToEmail(emailBody.getUserEmail());
+        Double couponPrice = Double.parseDouble(emailBody.getCouponPrice());
+        Integer percentOff = (int)((1-couponPrice)*100);
+        emailVo.setSubject("Coupon Code from PinPinFun");
+        ArrayList<MultipartFile> attachment = new ArrayList<>();
+        try {
+            CouponPhotoOperationExecution cpoe =
+                    couponPhotoService.selectCouponPhotoListByCouponId(emailBody.getCouponId());
+            if (cpoe!=null && cpoe.getCouponPhotos()!=null && cpoe.getCouponPhotos().size()!=0) {
+                for (CouponPhoto photo :cpoe.getCouponPhotos()) {
+                    attachment.add(ShopImgFileUtil.getEmailAttachment(photo.getPhoto()));
+                }
+            }
+            CouponOperationExecution coe = couponService.getCouponByCouponId(emailBody.getCouponId());
+            if (coe!=null && coe.getCoupon()!=null
+                    && coe.getCoupon().getStartTime()!=null && coe.getCoupon().getEndTime()!=null) {
+                emailBody.setStartTime(coe.getCoupon().getStartTime().toString());
+                emailBody.setEndTime(coe.getCoupon().getEndTime().toString());
+            } else {
+                emailBody.setStartTime((new Date()).toString());
+                emailBody.setEndTime("No end time");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        if (attachment.size() != 0) {
+            emailVo.setAttachment(attachment);
+        }
+        emailVo.setContent("Here is the coupon "
+                + emailBody.getCouponDesc()
+                + ". You can get "
+                + percentOff + "%" + " off"
+                + "\n"
+                + "The start time is " + emailBody.getStartTime() + "\n"
+                + "The end time is " + emailBody.getEndTime());
+        emailVo.setSendDate(new Date());
+        return emailVo;
+    }
+
+    /**
+     * transter emailVo to Email for db store
+     * @param emailVo
+     * @return
+     */
+    private Email parseEmailVoToEmail(EmailVo emailVo) {
+        if (emailVo == null) {
+            throw new RuntimeException(EmailStateEnum.INNER_ERROR.getStateInfo());
+        }
+        Email email = new Email();
+        if (emailVo.getToEmail()!=null && !emailVo.getToEmail().equals("")) {
+            email.setToEmail(emailVo.getToEmail());
+        }
+        if (emailVo.getSubject()!=null && !emailVo.getSubject().equals("")) {
+            email.setSubject(emailVo.getSubject());
+        }
+        if (emailVo.getContent()!=null && !emailVo.getContent().equals("")) {
+            email.setContent(emailVo.getContent());
+        }
+        if (emailVo.getAttachment()!=null) {
+            StringBuilder tempAttachment = new StringBuilder();
+            for (MultipartFile file : emailVo.getAttachment()) {
+                tempAttachment.append(file.getOriginalFilename());
+                tempAttachment.append(";");
+            }
+            email.setAttachment(tempAttachment.toString());
+        }
+        if (emailVo.getSendDate() != null) {
+            email.setSendTime(emailVo.getSendDate());
+            email.setPlanTime(emailVo.getSendDate());
+        }
+        email.setEmailType("0");
+        email.setSendFlag("0");
+        return email;
     }
 }
