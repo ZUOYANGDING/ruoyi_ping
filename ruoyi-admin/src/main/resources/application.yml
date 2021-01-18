@@ -80,7 +80,7 @@ spring:
   mail:
       host: smtp.163.com
       username: zuoyangdingtest@163.com
-#      password: 
+      password: VQFUGXXAZODAPRYO
       properties:
         from: zuoyangdingtest@163.com
         mail:

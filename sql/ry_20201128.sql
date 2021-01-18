@@ -220,7 +220,7 @@ insert into sys_role values('1', '超级管理员',  'admin',  1, 1, 1, 1, '0', 
 insert into sys_role values('2', '普通角色',    'common', 2, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '普通角色');
 -- for ping test
 insert into sys_role values('3', 'shop owner', 'owner', 1, 1, 1, 1, '0', '0', 'admin', sysdate(), '', null, 'shop owner');
-
+insert into sys_role values('4', 'customer', 'customer', 1, 1, 1, 1, '0', '0', 'admin', sysdate(), '', null, 'customer');
 
 
 -- ----------------------------

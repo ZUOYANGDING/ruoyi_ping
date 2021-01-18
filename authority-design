@@ -29,3 +29,4 @@ user new:
 userId:3, username: ping, password:112357
 role new:
 roleId:3, roleAuth: owner
+roleId:4, roleAuth: customer

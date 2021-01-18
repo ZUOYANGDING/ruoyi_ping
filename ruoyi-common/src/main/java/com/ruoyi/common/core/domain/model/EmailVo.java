@@ -6,6 +6,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Email entity for email sent
+ *
+ * @author zuoyangding
+ */
 public class EmailVo {
     private String emailId;
     private String fromEmail;

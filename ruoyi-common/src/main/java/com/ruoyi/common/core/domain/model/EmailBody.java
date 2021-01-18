@@ -1,5 +1,11 @@
 package com.ruoyi.common.core.domain.model;
 
+/**
+ * email entity for request body
+ *
+ * @author zuoyangding
+ */
+
 public class EmailBody {
     private String userEmail;
     private Long shopId;

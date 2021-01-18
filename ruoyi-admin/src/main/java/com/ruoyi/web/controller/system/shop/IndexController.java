@@ -300,6 +300,7 @@ public class IndexController {
                 + ". You can get "
                 + percentOff + "%" + " off"
                 + "\n"
+                + "The coupon code is " + emailBody.getCouponCode() + "\n"
                 + "The start time is " + emailBody.getStartTime() + "\n"
                 + "The end time is " + emailBody.getEndTime());
         emailVo.setSendDate(new Date());

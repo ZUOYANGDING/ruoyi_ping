@@ -79,20 +79,6 @@ public class EmailServiceImpl implements EmailService {
                 } else {
                     userId = guest.getGuestId();
                 }
-//                // store guest into db and get userID
-//                Long userId = null;
-//                Guest guest = new Guest();
-//                guest.setGuestEmail(email.getToEmail());
-//                int guest_result = -1;
-//                guest_result = guestMapper.insertGuest(guest);
-//                if (guest_result <= 0) {
-//                    return new EmailOperationExecution(EmailStateEnum.INNER_ERROR);
-//                } else {
-//                    userId = guestMapper.selectGuestByEmail(email.getToEmail()).getGuestId();
-//                    if (userId < 1) {
-//                        return new EmailOperationExecution(EmailStateEnum.INNER_ERROR);
-//                    }
-//                }
 
                 // store email into db
                 email.setUserId(userId);

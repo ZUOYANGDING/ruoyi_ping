@@ -69,6 +69,8 @@ public class EmailSendServiceImpl implements EmailSendService {
             messageHelper.setSubject(emailVo.getSubject());
             messageHelper.setSentDate(emailVo.getSendDate());
             messageHelper.setText(emailVo.getContent());
+            //when use 163, to prevent 554 error
+            messageHelper.setCc("zuoyangdingtest@163.com");
 
             if (emailVo.getAttachment() != null) {
                 for (MultipartFile multipartFile : emailVo.getAttachment()) {

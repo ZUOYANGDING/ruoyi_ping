@@ -41,3 +41,4 @@ Get permission:
 Index Page:
 	call /index/all										fetch all coupons
 	call /index/filter									fetch coupons by filter, all filters can be optional
+	call /index/sendemail								send the coupon detail to the email address that user input
