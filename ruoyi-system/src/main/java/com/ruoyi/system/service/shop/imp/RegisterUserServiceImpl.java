@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * user register service impl
+ *
+ * @author zuoyangding
+ */
 @Service
 public class RegisterUserServiceImpl implements RegisterUserService {
 
@@ -139,7 +144,12 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         return true;
     }
 
-
+    /**
+     * check if repeat email
+     * @param user
+     * @return
+     * @throws RuntimeException
+     */
     private boolean checkRepeatUserEmail(SysUser user) throws RuntimeException{
         try {
             int result = userMapper.checkUserNameUnique(user.getUserName());
@@ -153,6 +163,12 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         }
     }
 
+    /**
+     * check if repeat user name
+     * @param user
+     * @return
+     * @throws RuntimeException
+     */
     private boolean checkRepeatUserName(SysUser user) throws RuntimeException {
         try {
             int result = userMapper.checkUserNameUnique(user.getUserName());
@@ -166,6 +182,11 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         }
     }
 
+    /**
+     * record link in user_role form for customer
+     * @param user
+     * @throws RuntimeException
+     */
     @Transactional
     public void linkWithCustomer(SysUser user) throws RuntimeException{
         try {
@@ -183,6 +204,11 @@ public class RegisterUserServiceImpl implements RegisterUserService {
         }
     }
 
+    /**
+     * record link in user_role form for shop owner
+     * @param user
+     * @throws RuntimeException
+     */
     @Transactional
     public void linkWithShopOwner(SysUser user) throws RuntimeException{
         try {

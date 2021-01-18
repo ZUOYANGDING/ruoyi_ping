@@ -115,6 +115,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/druid/**").anonymous()
                 //TODO temporary index page
                 .antMatchers("/index/**").anonymous()
+                //TODO temporary register page
+                .antMatchers("/register/**").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 .and()
